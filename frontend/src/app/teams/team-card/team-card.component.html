@@ -1,1 +1,13 @@
-<p>team-card works!</p>
+<div class="team-card">
+  <div class="card-header">
+    <h2>{{ this.team.name }}</h2>
+    <!-- TODO: Get projects -->
+    <span># of projects: 6</span>
+  </div>
+  <h3>Members</h3>
+  <div class="names">
+    <div class="name-card" *ngFor="let user of this.team.teammates">
+      {{ user.profile.firstName }} {{ user.profile.lastName | nameToInitial }}
+    </div>
+  </div>
+</div>

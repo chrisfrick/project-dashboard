@@ -5,3 +5,13 @@ h1 {
   text-align: center;
   color: var(--color-teal);
 }
+
+.teams-container {
+  max-width: 1142px;
+  margin: auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  row-gap: 125px;
+  flex-wrap: wrap;
+}

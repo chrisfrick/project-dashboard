@@ -1,4 +1,5 @@
 <app-navbar> </app-navbar>
 <h1>Teams</h1>
-<div class="teams-container"></div>
-{{ this.teams | json }}
+<div class="teams-container">
+  <app-team-card *ngFor="let team of this.teams" [team]="team"></app-team-card>
+</div>
