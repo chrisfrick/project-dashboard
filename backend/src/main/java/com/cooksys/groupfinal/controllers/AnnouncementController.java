@@ -1,6 +1,9 @@
 package com.cooksys.groupfinal.controllers;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,5 +22,15 @@ public class AnnouncementController {
 	@PostMapping("/admin/announcements")
 	public void createAnnouncement(@RequestBody AnnouncementDto announcementDto) {
 	    announcementService.createAnnouncement(announcementDto);
+	}
+	
+	@PutMapping("/admin/announcements/{announcementId}")
+	public AnnouncementDto updateAnnouncement(@PathVariable("id") Long id, @RequestBody AnnouncementDto announcementDto) {
+	    return announcementService.updateAnnouncement(id, announcementDto);
+	}
+	
+	@DeleteMapping("/admin/announcements/{announcementId}")
+	public AnnouncementDto deleteAnnouncement(@PathVariable("id") Long id) {
+	    return announcementService.deleteAnnouncement(id);
 	}
 }
