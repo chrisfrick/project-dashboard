@@ -1,5 +1,29 @@
+/* You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/css2?family=Mulish&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+
+:root {
+  --color-teal: #1ba098;
+  --color-tan: #deb992;
+  --color-navy: #0b2d45;
+  --color-red: #f24e1e;
+}
+
 body {
-  margin: 0;
-  padding: 0;
-  width: 100vw;
+  background-color: #051622;
+  color: white;
+}
+
+.button {
+  background-color: var(--color-teal);
+  color: #ffffffbf;
+
+  width: 100px;
+  padding: 4px;
+  border-radius: 10.29px;
+
+  font-family: "Mulish", sans-serif;
+  text-align: center;
 }
