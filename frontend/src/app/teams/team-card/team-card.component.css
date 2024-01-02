@@ -15,6 +15,10 @@
   font-weight: 400;
 }
 
+.card-header span {
+  color: rgba(255, 255, 255, 0.75);
+}
+
 h2 {
   font-family: Mulish, sans-serif;
   font-size: 24px;
@@ -23,7 +27,7 @@ h2 {
 }
 
 h3 {
-  opacity: 75%;
+  color: rgba(255, 255, 255, 0.75);
   font-size: 16.24px;
   text-align: center;
   margin: 15px 0 20px 0;
