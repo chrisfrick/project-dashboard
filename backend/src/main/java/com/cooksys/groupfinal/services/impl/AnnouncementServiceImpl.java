@@ -9,6 +9,7 @@ import com.cooksys.groupfinal.exceptions.NotAuthorizedException;
 import com.cooksys.groupfinal.exceptions.NotFoundException;
 import com.cooksys.groupfinal.mappers.AnnouncementMapper;
 import com.cooksys.groupfinal.repositories.AnnouncementRepository;
+import com.cooksys.groupfinal.repositories.CompanyRepository;
 import com.cooksys.groupfinal.services.AnnouncementService;
 import lombok.RequiredArgsConstructor;
 
@@ -18,6 +19,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     
     private final AnnouncementMapper announcementMapper;
     private final AnnouncementRepository announcementRepository;
+    private final CompanyRepository companyRepository;
     
     
     private Announcement getNotDeletedAnnouncement(Long id) {
@@ -32,7 +34,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     }
     
     @Override
-    public void createAnnouncement(AnnouncementDto announcementDto) {
+    public void createAnnouncement(Long id, AnnouncementDto announcementDto) {
 
         if(!announcementDto.getAuthor().isAdmin()) {
             throw new NotAuthorizedException("You must be an Admin to create an Announcement"); 
@@ -42,7 +44,16 @@ public class AnnouncementServiceImpl implements AnnouncementService {
             
         }
         else {
-            announcementRepository.saveAndFlush(announcementMapper.dtoToEntity(announcementDto));
+            
+            if (companyRepository.getReferenceById(id) == null) {
+                throw new NotFoundException("No company found with the given id.");
+            }
+            
+            //Create Announcement object and set the company based on the given id.
+            Announcement newAnnouncement = announcementMapper.dtoToEntity(announcementDto);
+            newAnnouncement.setCompany(companyRepository.getReferenceById(id));
+            
+            announcementRepository.saveAndFlush(newAnnouncement);
         }
         
     }

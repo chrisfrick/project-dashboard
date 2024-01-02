@@ -19,9 +19,10 @@ public class AnnouncementController {
 	
 	private final AnnouncementService announcementService;
 
-	@PostMapping("/admin/announcements")
-	public void createAnnouncement(@RequestBody AnnouncementDto announcementDto) {
-	    announcementService.createAnnouncement(announcementDto);
+	//Path may need to change (include admin somewhere?)
+	@PostMapping("/{companyId}/announcements")
+	public void createAnnouncement(@PathVariable("id") Long id, @RequestBody AnnouncementDto announcementDto) {
+	    announcementService.createAnnouncement(id, announcementDto);
 	}
 	
 	@PutMapping("/admin/announcements/{announcementId}")
