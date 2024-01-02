@@ -1,0 +1,21 @@
+<nav id="navbar">
+  <ul>
+    <li class="logo-admin">
+      <img class="logo" src="../../assets/logo.svg" />
+      <div class="admin-text" *ngIf="userIsAdmin">ACTING AS ADMIN</div>
+      <div class="admin-text" *ngIf="!userIsAdmin">
+        {{ firstName }} {{ this.lastName | nameToInitial }}
+      </div>
+    </li>
+    <li class="hamburger" (click)="toggleMenu()">
+      <img src="../../assets/hamburger.svg" />
+    </li>
+    <li class="menu" [class.is-open]="isMenuOpen">
+      <a class="menu-item">Home</a>
+      <a class="menu-item" *ngIf="userIsAdmin">Company</a>
+      <a class="menu-item">Teams</a>
+      <a class="menu-item" *ngIf="userIsAdmin">Users</a>
+      <a class="menu-item no-border">Logout</a>
+    </li>
+  </ul>
+</nav>
