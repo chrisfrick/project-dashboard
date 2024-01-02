@@ -10,7 +10,7 @@ export class NavbarComponent {
   firstName = 'Kenny';
   lastName = 'Worth';
 
-  admin = false;
+  userIsAdmin = true;
 
   isMenuOpen = false;
 
