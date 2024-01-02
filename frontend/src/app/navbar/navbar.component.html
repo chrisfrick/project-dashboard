@@ -2,7 +2,10 @@
   <ul>
     <li class="logo-admin">
       <img class="logo" src="../../assets/logo.svg" />
-      <span class="admin-text">ACTING AS ADMIN</span>
+      <div class="admin-text" *ngIf="admin">ACTING AS ADMIN</div>
+      <div class="admin-text">
+        {{ firstName }} {{ this.lastName | nameToInitial }}
+      </div>
     </li>
     <li class="hamburger" (click)="toggleMenu()">
       <img src="../../assets/hamburger.svg" />
@@ -11,7 +14,8 @@
       <a class="menu-item">Home</a>
       <a class="menu-item" *ngIf="admin">Company</a>
       <a class="menu-item">Teams</a>
-      <a class="menu-item">Logout</a>
+      <a class="menu-item" *ngIf="admin">Users</a>
+      <a class="menu-item no-border">Logout</a>
     </li>
   </ul>
 </nav>

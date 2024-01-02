@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NameToInitialPipe } from './name-to-initial.pipe';
 
 @Component({
   selector: 'app-navbar',
@@ -6,7 +7,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent {
-  admin = true;
+  firstName = 'Kenny';
+  lastName = 'Worth';
+
+  admin = false;
 
   isMenuOpen = false;
 
