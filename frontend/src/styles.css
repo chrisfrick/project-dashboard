@@ -1,29 +1,31 @@
 /* You can add global styles to this file, and also import other style files */
-@import url('https://fonts.googleapis.com/css2?family=Mulish&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Mulish&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
 
 :root {
-	--color-teal: #1BA098;
-	--color-tan: #DEB992;
-	--color-navy: #0B2D45;
-	--color-red: #F24E1E;
+  --color-teal: #1ba098;
+  --color-tan: #deb992;
+  --color-navy: #0b2d45;
+  --color-light-navy: #0d3a59;
+  --color-red: #f24e1e;
 }
 
 body {
-	background-color: #051622;
-	color: white;
+  background-color: #051622;
+  color: white;
+  margin: 0;
 }
 
 .button {
-	background-color: var(--color-teal);
-	color: #FFFFFFBF;
+  background-color: var(--color-teal);
+  color: #ffffffbf;
 
-	width: 100px;
-	padding: 4px;
-	border-radius: 10.29px;
+  width: 100px;
+  padding: 4px;
+  border-radius: 10.29px;
 
-	font-family: 'Mulish', sans-serif;
-	text-align: center;
+  font-family: "Mulish", sans-serif;
+  text-align: center;
 }
