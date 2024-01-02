@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { TeamService } from 'src/app/team.service';
 import { Team } from 'src/app/types/team';
 
 @Component({
@@ -9,4 +10,14 @@ import { Team } from 'src/app/types/team';
 export class TeamCardComponent {
   @Input()
   team!: Team;
+
+  projectCount = 0;
+
+  constructor(private teamService: TeamService) {}
+
+  ngOnInit(): void {
+    this.teamService
+      .getProjects(6, this.team.id!)
+      .subscribe((projects) => (this.projectCount = projects.length));
+  }
 }
