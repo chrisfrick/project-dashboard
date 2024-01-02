@@ -19,6 +19,8 @@ body {
 }
 
 .button {
+  user-select: none;
+  
   background-color: var(--color-teal);
   color: #ffffffbf;
 
