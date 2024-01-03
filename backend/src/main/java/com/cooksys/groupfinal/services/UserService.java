@@ -20,5 +20,5 @@ public interface UserService {
 
     FullUserDto createUser(CredentialsDto credentials, ProfileDto profile);
 
-    void deleteUser(Long userIdToDelete, CredentialsDto adminCredentials);
+    void deleteUser(Long userIdToDelete);
 }

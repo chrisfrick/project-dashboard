@@ -125,17 +125,10 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public FullUserDto createUser(CredentialsDto credentials, ProfileDto profile) {
+        public FullUserDto createUser(CredentialsDto credentials, ProfileDto profile) {
 
         if (credentials == null || profile == null) {
             throw new BadRequestException("Credentials and Profile are required.");
-        }
-
-        User adminUser = userRepository.findByCredentialsUsernameAndActiveTrue(credentials.getUsername())
-                .orElseThrow(() -> new NotFoundException("Admin user not found."));
-
-        if (!adminUser.isAdmin()) {
-            throw new NotAuthorizedException("Invalid credentials or not authorized.");
         }
 
         String desiredUsername = credentials.getUsername();
@@ -165,16 +158,9 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public void deleteUser(Long userIdToDelete, CredentialsDto adminCredentials) {
-        if (userIdToDelete == null || adminCredentials == null) {
+    public void deleteUser(Long userIdToDelete) {
+        if (userIdToDelete == null) {
             throw new BadRequestException("User ID to delete and admin credentials are required.");
-        }
-
-        User adminUser = userRepository.findByCredentialsUsernameAndActiveTrue(adminCredentials.getUsername())
-                .orElseThrow(() -> new NotFoundException("Admin user not found."));
-
-        if (!adminUser.isAdmin()) {
-            throw new NotAuthorizedException("Invalid credentials or not authorized.");
         }
 
         User userToDelete = userRepository.findById(userIdToDelete)
