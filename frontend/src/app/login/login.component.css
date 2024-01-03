@@ -116,3 +116,17 @@
     background-color: var(--color-teal);
     color: #ffffff;
 }
+
+.login-popup {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: -15px;
+    margin-bottom: 15px;
+}
+
+.login-popup-text {
+    position: absolute;
+    color: red;
+}

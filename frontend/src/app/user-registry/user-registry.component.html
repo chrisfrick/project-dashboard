@@ -39,6 +39,15 @@
                         </span>
                     </td>
                     <td>{{ rowData.status }}</td>
+                    <td>
+                        <img src="../../assets/edit-icon.png" class="table-icon" alt="edit" 
+                            (click)="editUser(rowData)">
+                    </td>
+                    <td>
+                        <img src="../../assets/delete-icon.png" class="table-icon" alt="delete"
+                            (click)="deleteUser(rowData)">
+                    </td>
+
                 </tr>
             </tbody>
         </table>
@@ -62,30 +71,30 @@
 
             <div class="overlay-input">
                 <div class="overlay-input-line">
-                    <input type="text" placeholder="first name">
+                    <input type="text" placeholder="first name" [(ngModel)]="newUser.firstName">
                     <div class="input-line"></div>
                 </div>
 
                 <div class="overlay-input-line">
-                    <input type="text" placeholder="last name">
+                    <input type="text" placeholder="last name" [(ngModel)]="newUser.lastName">
                     <div class="input-line"></div>
                 </div>
             </div>
 
             <div class="overlay-input">
                 <div class="overlay-input-line">
-                    <input type="text" placeholder="email">
+                    <input type="text" placeholder="email" [(ngModel)]="newUser.email">
                     <div class="input-line"></div>
                 </div>
             </div>
 
             <div class="overlay-input">
                 <div class="overlay-input-line">
-                    <input type="text" placeholder="password">
+                    <input type="text" placeholder="password" [(ngModel)]="newUser.password">
                     <div class="input-line"></div>
                 </div>
                 <div class="overlay-input-line">
-                    <input type="text" placeholder="confirm password">
+                    <input type="text" placeholder="confirm password" [(ngModel)]="newUser.confirmPassword">
                     <div class="input-line"></div>
                 </div>
             </div>
@@ -95,7 +104,7 @@
             </div>
 
             <div class="admin-bool">
-                <select name="make-admin" id="make-admin" (focus)="onSelectFocus()">
+                <select name="make-admin" id="make-admin" [(ngModel)]="newUser.admin" (focus)="onSelectFocus()">
                     <option *ngIf="!selectedOption" value="" disabled selected>Select an option</option>
                     <option value="true">True</option>
                     <option value="false">False</option>
@@ -103,7 +112,7 @@
             </div>
 
             <div>
-                <button>Submit</button>
+                <button (click)="submitUser()">Submit</button>
             </div>
         </div>
     </div>
