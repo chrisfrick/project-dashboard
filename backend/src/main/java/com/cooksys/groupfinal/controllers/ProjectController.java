@@ -14,16 +14,22 @@ public class ProjectController {
 
 	private final ProjectService projectService;
 
-	//PATCH projects/{teamId}/team/{projectId}/project
-	// Request {
-	// description  or project
-	//	}
+	//**************
+	//PATCH {projectId}
+	// request { ProjectDto }
+	// response ProjectDto
+	//***************
 
-	//response  updated project
 	@PatchMapping("{projectId}")
 	public ProjectDto updateProjectDescription(@PathVariable ("projectId") Long projectId, @RequestBody ProjectDto projectDto) {
 		return projectService.updateProjectDescription(projectId, projectDto);
 	}
+
+	//**********
+	//POST
+	//request { ProjectDto }
+	//response ProjectDto
+	//************
 
 	@PostMapping
 	public ProjectDto addProject(@RequestBody ProjectDto projectDto) {

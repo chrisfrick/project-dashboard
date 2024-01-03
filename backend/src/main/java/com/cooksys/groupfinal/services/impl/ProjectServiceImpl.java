@@ -2,19 +2,11 @@ package com.cooksys.groupfinal.services.impl;
 
 import com.cooksys.groupfinal.dtos.ProjectDto;
 import com.cooksys.groupfinal.entities.Project;
-import com.cooksys.groupfinal.entities.Team;
 import com.cooksys.groupfinal.exceptions.BadRequestException;
 import com.cooksys.groupfinal.exceptions.NotFoundException;
-import com.cooksys.groupfinal.mappers.AnnouncementMapper;
-import com.cooksys.groupfinal.mappers.FullUserMapper;
 import com.cooksys.groupfinal.mappers.ProjectMapper;
-import com.cooksys.groupfinal.mappers.TeamMapper;
-import com.cooksys.groupfinal.repositories.CompanyRepository;
 import com.cooksys.groupfinal.repositories.ProjectRepository;
-import com.cooksys.groupfinal.repositories.TeamRepository;
-import com.cooksys.groupfinal.services.CompanyService;
 import org.springframework.stereotype.Service;
-
 import com.cooksys.groupfinal.services.ProjectService;
 
 import lombok.RequiredArgsConstructor;
@@ -26,10 +18,7 @@ import com.cooksys.groupfinal.entities.Project;
 @Service
 @RequiredArgsConstructor
 public class ProjectServiceImpl implements ProjectService {
-    private final TeamRepository teamRepository;
-    private final TeamMapper teamMapper;
     private final ProjectMapper projectMapper;
-    private final CompanyService companyService;
     private final ProjectRepository projectRepository;
 
     private Project findProject(Long id) {
