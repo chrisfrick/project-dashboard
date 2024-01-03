@@ -67,17 +67,33 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public FullUserDto updateUserProfile(Long userId, UserRequestDto userRequestDto) {
-        if (userId == null || userRequestDto == null) {
-            throw new BadRequestException("Username and request body must be supplied");
+        if (userId == null) {
+            throw new BadRequestException("Username string must be supplied");
+        }
+        if (userRequestDto == null) {
+            throw new BadRequestException("Request body must be supplied");
+        }
+        if (userRequestDto.getCredentials() == null || userRequestDto.getCredentials().getUsername() == null || userRequestDto.getCredentials().getPassword() == null) {
+            throw new BadRequestException("Complete credentials must be supplied");
+        }
+        if (userRequestDto.getProfile() == null) {
+            throw new BadRequestException("Profile field must be supplied");
         }
 
-        User existingUser = userRepository.findUserByIdAndDeletedIsFalse(userId)
-                .orElseThrow(() -> new NotFoundException("No one exists with username: " + userId));
+
+        Optional<User> existingUserOptional = userRepository.findUserByIdAndDeletedIsFalse(userId);
+
+        if (existingUserOptional.isEmpty()) {
+            throw new NotFoundException("No one exists with username: " + userId);
+        }
+
+        User existingUser = existingUserOptional.get();
 
         if (existingUser.isDeleted()) {
             throw new NotFoundException("User with username " + userId + " is deleted");
         }
 
+        // Update the profile
         Profile profileToUpdate = existingUser.getProfile();
         ProfileDto updatedProfileDto = userRequestDto.getProfile();
 
@@ -96,6 +112,7 @@ public class UserServiceImpl implements UserService {
             }
         }
 
+        // Save and return the updated profile
         return fullUserMapper.entityToFullUserDto(userRepository.saveAndFlush(existingUser));
     }
 
