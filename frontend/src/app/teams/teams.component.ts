@@ -10,6 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class TeamsComponent {
   teams: Team[] = [];
+  createTeamShown: boolean = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -22,5 +23,9 @@ export class TeamsComponent {
     this.dataService
       .getTeams(companyIdFromRoute)
       .subscribe((teams) => (this.teams = teams));
+  }
+
+  closeModal(): void {
+    this.createTeamShown = false;
   }
 }

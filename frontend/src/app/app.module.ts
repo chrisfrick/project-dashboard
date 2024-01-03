@@ -12,6 +12,7 @@ import { CreateTeamComponent } from './teams/create-team/create-team.component';
 import { SelectCompanyComponent } from './select-company/select-company.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AnnouncementsComponent } from './announcements/announcements.component';
+import { NameCardComponent } from './teams/name-card/name-card.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { AnnouncementsComponent } from './announcements/announcements.component'
     CreateTeamComponent,
     SelectCompanyComponent,
     AnnouncementsComponent,
+    NameCardComponent,
   ],
   imports: [
     BrowserModule,

@@ -9,19 +9,29 @@ import { FullUser } from './types/full-user';
   providedIn: 'root',
 })
 export class DataService {
+  // TODO: REMOVE HARDCODED COMPANY
+  currentCompanyId: number = 6;
+
   constructor(private http: HttpClient) {}
 
   getTeams(companyId: number) {
-    return this.http.get<Team[]>(`company/${companyId}/teams`);
+    return this.http.get<Team[]>(`api/company/${companyId}/teams`);
   }
 
   getProjects(companyId: number, teamId: number) {
     return this.http.get<Project[]>(
-      `company/${companyId}/teams/${teamId}/projects`
+      `api/company/${companyId}/teams/${teamId}/projects`
     );
   }
 
   getCompanyUsers(companyId: number) {
-    return this.http.get<FullUser[]>(`company/${companyId}/users`);
+    return this.http.get<FullUser[]>(`api/company/${companyId}/users`);
+  }
+
+  createTeam(team: Team) {
+    return this.http.post<Team>(
+      `api/company/${this.currentCompanyId}/team`,
+      team
+    );
   }
 }
