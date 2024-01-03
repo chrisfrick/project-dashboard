@@ -25,12 +25,12 @@ public class AnnouncementController {
 	    announcementService.createAnnouncement(id, announcementDto);
 	}
 	
-	@PutMapping("/admin/announcements/{announcementId}")
+	@PutMapping("/announcements/{announcementId}")
 	public AnnouncementDto updateAnnouncement(@PathVariable("id") Long id, @RequestBody AnnouncementDto announcementDto) {
 	    return announcementService.updateAnnouncement(id, announcementDto);
 	}
 	
-	@DeleteMapping("/admin/announcements/{announcementId}")
+	@DeleteMapping("/announcements/{announcementId}")
 	public AnnouncementDto deleteAnnouncement(@PathVariable("id") Long id) {
 	    return announcementService.deleteAnnouncement(id);
 	}
