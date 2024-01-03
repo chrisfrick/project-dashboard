@@ -1,6 +1,5 @@
 package com.cooksys.groupfinal.services.impl;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -9,7 +8,6 @@ import com.cooksys.groupfinal.dtos.ProfileDto;
 import com.cooksys.groupfinal.dtos.UserRequestDto;
 import com.cooksys.groupfinal.embeddables.Profile;
 import com.cooksys.groupfinal.mappers.ProfileMapper;
-import com.cooksys.groupfinal.repositories.CompanyRepository;
 import org.springframework.stereotype.Service;
 
 import com.cooksys.groupfinal.dtos.CredentialsDto;
@@ -34,8 +32,6 @@ public class UserServiceImpl implements UserService {
     private final FullUserMapper fullUserMapper;
 	private final CredentialsMapper credentialsMapper;
     private final ProfileMapper profileMapper;
-
-    private final CompanyRepository companyRepository;
 
 	private User findUser(String username) {
         Optional<User> user = userRepository.findByCredentialsUsernameAndActiveTrue(username);
@@ -144,9 +140,6 @@ public class UserServiceImpl implements UserService {
             User newUser = new User();
             newUser.setCredentials(credentialsMapper.dtoToEntity(credentials));
             newUser.setProfile(profileMapper.dtoToEntity(profile));
-            if (newUser.isAdmin()) {
-                newUser.setCompanies(new HashSet<>(companyRepository.findAll()));
-            }
             User savedUser = userRepository.saveAndFlush(newUser);
             return fullUserMapper.entityToFullUserDto(savedUser);
         }
