@@ -4,6 +4,8 @@ import java.util.Set;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,6 +38,11 @@ public class CompanyController {
     public Set<TeamDto> getAllTeams(@PathVariable Long id) {
         return companyService.getAllTeams(id);
     }
+	
+	@PostMapping("/{id}/teams")
+	public void createNewTeamForCompany(@PathVariable Long id, @RequestBody TeamDto teamDto) {
+		companyService.createNewTeamForCompany(id, teamDto);
+	}
 	
 	@GetMapping("/{companyId}/teams/{teamId}/projects") 
 	public Set<ProjectDto> getAllProjects(@PathVariable Long companyId, @PathVariable Long teamId) {
