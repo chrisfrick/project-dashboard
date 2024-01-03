@@ -18,6 +18,7 @@ public class ProjectController {
 	//PATCH {projectId}
 	// request { ProjectDto }
 	// response ProjectDto
+	// to modify specific project description
 	//***************
 
 	@PatchMapping("{projectId}")
@@ -36,6 +37,14 @@ public class ProjectController {
 		return projectService.addProject(projectDto);
 	}
 
+	//*********
+	// GET
+	//request {projectId}
+	//response ProjectDto
+	@GetMapping("{id}")
+	public ProjectDto getProjectById(@PathVariable ("id") Long id) {
+		return projectService.getProjectById(id);
+	}
 
 
 }

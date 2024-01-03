@@ -1,7 +1,9 @@
 package com.cooksys.groupfinal.services.impl;
 
 import com.cooksys.groupfinal.dtos.ProjectDto;
+import com.cooksys.groupfinal.dtos.TeamDto;
 import com.cooksys.groupfinal.entities.Project;
+import com.cooksys.groupfinal.entities.Team;
 import com.cooksys.groupfinal.exceptions.BadRequestException;
 import com.cooksys.groupfinal.exceptions.NotFoundException;
 import com.cooksys.groupfinal.mappers.ProjectMapper;
@@ -28,13 +30,19 @@ public class ProjectServiceImpl implements ProjectService {
         }
         return project.get();
     }
+
+    @Override
+    public ProjectDto getProjectById(Long id) {
+        return projectMapper.entityToDto(findProject(id));
+    }
+
     @Override
     public ProjectDto updateProjectDescription(Long projectId, ProjectDto projectDto) {
         // validation for null
         if(projectDto == null || projectId == null) {
             throw new BadRequestException("A team id, project id and projectDto are required.");
         }
-        // find project by id
+        // fetch project by id
         Project  project = findProject(projectDto.getId());
 
         // validate for active
