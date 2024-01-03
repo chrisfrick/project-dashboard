@@ -1,0 +1,44 @@
+.create-team-overlay {
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  top: 10vh;
+  left: 0;
+  right: 0;
+  height: 80vh;
+  max-width: 900px;
+  background-color: var(--color-navy);
+}
+
+.create-team-form {
+  display: flex;
+  flex-direction: column;
+  gap: 3vh;
+  max-width: 313px;
+  margin: 30px auto;
+}
+
+label {
+  font-size: 16.24px;
+  color: var(--color-tan);
+}
+
+.input-style {
+  border: 0;
+  outline: 0;
+  background: transparent;
+  border-bottom: 1px solid var(--color-tan);
+  color: #ffffff;
+  font-size: 16.24px;
+}
+
+h2 {
+  font-family: Inter, sans-serif;
+  font-weight: 800;
+  color: var(--color-tan);
+  text-align: center;
+}
+
+button {
+  align-self: center;
+}

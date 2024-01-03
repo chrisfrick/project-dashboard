@@ -1,0 +1,19 @@
+<div class="create-team-overlay">
+  <form class="create-team-form">
+    <label for="teamName">Team Name</label>
+    <input class="input-style" name="teamName" type="text" />
+    <label for="description">Description</label>
+    <input class="input-style" name="description" type="text" />
+    <h2>Select Members</h2>
+    <select>
+      <option selected disabled>Pick an option</option>
+      <option *ngFor="let user of users">
+        {{ user.profile.firstName }} {{ user.profile.lastName | nameToInitial }}
+      </option>
+    </select>
+    <div *ngFor="let user of newTeam.teammates">
+      {{ user.profile.firstName }} {{ user.profile.lastName | nameToInitial }}
+    </div>
+    <button class="button">Submit</button>
+  </form>
+</div>

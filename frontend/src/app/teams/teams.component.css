@@ -1,0 +1,17 @@
+h1 {
+  font-family: Mulish, sans-serif;
+  font-weight: 400;
+  font-size: 48px;
+  text-align: center;
+  color: var(--color-teal);
+}
+
+.teams-container {
+  max-width: 1142px;
+  margin: auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-around;
+  row-gap: 125px;
+  flex-wrap: wrap;
+}

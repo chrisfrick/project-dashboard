@@ -1,8 +1,10 @@
 import { BasicUser } from './basic-user';
+import { Team } from './team';
 
-export interface Team {
+export interface Company {
   id?: number;
   name: string;
   description: string;
-  teammates: BasicUser[];
+  teams: Team[];
+  users: BasicUser[];
 }
