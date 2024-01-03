@@ -1,4 +1,6 @@
-export const LoganRoy = {
+import { FullUser } from './app/types/full-user';
+
+export const LoganRoy: FullUser = {
   id: 23,
   profile: {
     firstName: 'Logan',
@@ -334,6 +336,39 @@ export const LoganRoy = {
           },
           admin: false,
           active: false,
+          status: 'PENDING',
+        },
+      ],
+    },
+  ],
+  teams: [
+    {
+      id: 15,
+      name: 'Team 5',
+      description: 'Logan & Marcia',
+      teammates: [
+        {
+          id: 25,
+          profile: {
+            firstName: 'Marcia',
+            lastName: 'Roy',
+            email: 'mroy@email.com',
+            phone: '(777) 777-7777',
+          },
+          admin: false,
+          active: false,
+          status: 'PENDING',
+        },
+        {
+          id: 23,
+          profile: {
+            firstName: 'Logan',
+            lastName: 'Roy',
+            email: 'lroy@email.com',
+            phone: '(555) 555-5555',
+          },
+          admin: true,
+          active: true,
           status: 'PENDING',
         },
       ],

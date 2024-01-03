@@ -15,9 +15,7 @@ export class DataService {
   currentCompanyId: number = 6;
 
   // TODO: REMOVE HARDCODED USER
-  private currentUserSource = new BehaviorSubject<FullUser>(
-    LoganRoy as FullUser
-  );
+  private currentUserSource = new BehaviorSubject<FullUser>(LoganRoy);
   currentUser = this.currentUserSource.asObservable();
 
   constructor(private http: HttpClient) {}
