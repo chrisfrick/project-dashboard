@@ -8,10 +8,11 @@ import { NameToInitialPipe } from './navbar/name-to-initial.pipe';
 import { SelectCompanyComponent } from './select-company/select-company.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AnnouncementsComponent } from './announcements/announcements.component';
+import { DropdownComponent } from './dropdown/dropdown.component';
 
 @NgModule({
   declarations: [AppComponent,
-    SelectCompanyComponent, AnnouncementsComponent, NavbarComponent, NameToInitialPipe],
+    SelectCompanyComponent, AnnouncementsComponent, NavbarComponent, NameToInitialPipe, DropdownComponent],
   imports: [BrowserModule, AppRoutingModule,
     ReactiveFormsModule],
   providers: [],
