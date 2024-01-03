@@ -1,4 +1,4 @@
-package com.cooksys.groupfinal.entities;
+package com.cooksys.groupfinal.embeddables;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -9,12 +9,15 @@ import lombok.NoArgsConstructor;
 @Embeddable
 @NoArgsConstructor
 @Data
-public class Credentials {
+public class Profile {
 
-    @Column(nullable = false, unique = true)
-    private String username;
+    private String firstName;
+
+    private String lastName;
 
     @Column(nullable = false)
-    private String password;
+    private String email;
+
+    private String phone;
 
 }

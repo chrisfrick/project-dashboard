@@ -11,6 +11,6 @@ import com.cooksys.groupfinal.entities.User;
 public interface UserRepository extends JpaRepository<User, Long> {
 	
 	Optional<User> findByCredentialsUsernameAndActiveTrue(String username);
-
+	Optional<User> findUserByIdAndDeletedIsFalse(Long id);
 
 }
