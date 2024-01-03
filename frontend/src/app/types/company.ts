@@ -6,5 +6,5 @@ export interface Company {
   name: string;
   description: string;
   teams: Team[];
-  users: BasicUser[];
+  employees: BasicUser[];
 }

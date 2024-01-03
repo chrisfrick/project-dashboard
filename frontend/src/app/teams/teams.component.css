@@ -9,9 +9,28 @@ h1 {
 .teams-container {
   max-width: 1142px;
   margin: auto;
-  padding: 0 20px;
+  padding: 0 20px 50px 20px;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   row-gap: 125px;
   flex-wrap: wrap;
+}
+
+.add-team-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 313px;
+  height: 241px;
+  border: 2px solid var(--color-tan);
+  border-radius: 20px;
+  color: var(--color-tan);
+  font-family: Mulish, sans-serif;
+  font-weight: 400;
+  font-size: 16.24px;
+}
+
+.plus-sign {
+  margin-top: 20px;
 }

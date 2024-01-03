@@ -9,7 +9,7 @@ export interface FullUser {
     email: string;
     phone: string;
   };
-  isAdmin: boolean;
+  admin: boolean;
   active: boolean;
   status: string;
   companies: Company[];

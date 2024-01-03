@@ -4,10 +4,9 @@ import Announcement from '../types/announcement';
 @Component({
   selector: 'app-announcements',
   templateUrl: './announcements.component.html',
-  styleUrls: ['./announcements.component.css']
+  styleUrls: ['./announcements.component.css'],
 })
 export class AnnouncementsComponent {
-
   announcements: Announcement[] = [];
 
   ngOnInit(): void {
@@ -17,15 +16,17 @@ export class AnnouncementsComponent {
         firstName: 'Drew',
         lastName: 'Layton',
         email: 'drew@internet.com',
-        phone: '555-555-5555'
+        phone: '555-555-5555',
       },
-      isAdmin: true,
+      admin: true,
       active: true,
-      status: false
-    }
+      status: 'PENDING',
+    };
 
-    const message1 = '1Lorem ipsum our announcements go here! Our business has been going great and we are going to announce the winners of employee of the month! Lorem ipsum Lorem ipsum our announcements go here! Our business has been going great and we are going to announce the winners of employee of the month! Lorem ipsum  Lorem ipsum our announcements go here! Our business has been going great and we are going to announce the winners of employee of the month! Lorem ipsum'
-    const message2 = '2Lorem ipsum our announcements go here! Our business has been going great and we are going to announce the winners of employee of the month! Lorem ipsum Lorem ipsum our announcements go here! Our business has been going great and we are going to announce the winners of employee of the month! Lorem ipsum  Lorem ipsum our announcements go here! Our business has been going great and we are going to announce the winners of employee of the month! Lorem ipsum'
+    const message1 =
+      '1Lorem ipsum our announcements go here! Our business has been going great and we are going to announce the winners of employee of the month! Lorem ipsum Lorem ipsum our announcements go here! Our business has been going great and we are going to announce the winners of employee of the month! Lorem ipsum  Lorem ipsum our announcements go here! Our business has been going great and we are going to announce the winners of employee of the month! Lorem ipsum';
+    const message2 =
+      '2Lorem ipsum our announcements go here! Our business has been going great and we are going to announce the winners of employee of the month! Lorem ipsum Lorem ipsum our announcements go here! Our business has been going great and we are going to announce the winners of employee of the month! Lorem ipsum  Lorem ipsum our announcements go here! Our business has been going great and we are going to announce the winners of employee of the month! Lorem ipsum';
 
     this.announcements = [
       {
@@ -33,15 +34,15 @@ export class AnnouncementsComponent {
         date: new Date(),
         title: 'Title1',
         message: message1,
-        author: author
+        author: author,
       },
       {
         id: 2,
         date: new Date(),
         title: 'Title2',
         message: message2,
-        author: author
-      }
-    ]
+        author: author,
+      },
+    ];
   }
 }

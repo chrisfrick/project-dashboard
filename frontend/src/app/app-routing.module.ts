@@ -3,11 +3,16 @@ import { RouterModule, Routes } from '@angular/router';
 import { TeamsComponent } from './teams/teams.component';
 import { SelectCompanyComponent } from './select-company/select-company.component';
 import { AnnouncementsComponent } from './announcements/announcements.component';
+import { LoginComponent } from './login/login.component';
+import { UserRegistryComponent } from './user-registry/user-registry.component';
 
 const routes: Routes = [
+  { path: 'login', component: LoginComponent },
+  { path: '', redirectTo: '/login', pathMatch: 'full'},
+  { path: 'user-registry', component: UserRegistryComponent },
   { path: 'select-company', component: SelectCompanyComponent },
   { path: 'announcements', component: AnnouncementsComponent },
-  { path: 'teams/:companyId', component: TeamsComponent },
+  { path: 'teams', component: TeamsComponent },
 ];
 
 @NgModule({

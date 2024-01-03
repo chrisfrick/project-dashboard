@@ -6,8 +6,10 @@
   </div>
   <h3>Members</h3>
   <div class="names">
-    <div class="name-card" *ngFor="let user of this.team.teammates">
-      {{ user.profile.firstName }} {{ user.profile.lastName | nameToInitial }}
-    </div>
+    <app-name-card
+      *ngFor="let user of this.team.teammates"
+      [firstName]="user.profile.firstName"
+      [lastName]="user.profile.lastName"
+    ></app-name-card>
   </div>
 </div>
