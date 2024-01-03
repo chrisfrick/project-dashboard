@@ -5,5 +5,4 @@ export interface Team {
   name: string;
   description: string;
   teammates: BasicUser[];
-  projectCount?: number;
 }

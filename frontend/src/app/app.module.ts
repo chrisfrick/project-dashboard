@@ -9,6 +9,9 @@ import { TeamsComponent } from './teams/teams.component';
 import { TeamCardComponent } from './teams/team-card/team-card.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CreateTeamComponent } from './teams/create-team/create-team.component';
+import { SelectCompanyComponent } from './select-company/select-company.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { AnnouncementsComponent } from './announcements/announcements.component';
 
 @NgModule({
   declarations: [
@@ -18,8 +21,15 @@ import { CreateTeamComponent } from './teams/create-team/create-team.component';
     TeamsComponent,
     TeamCardComponent,
     CreateTeamComponent,
+    SelectCompanyComponent,
+    AnnouncementsComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

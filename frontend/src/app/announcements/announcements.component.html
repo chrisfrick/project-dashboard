@@ -1,0 +1,26 @@
+<app-navbar></app-navbar>
+<div class="container">
+	<div class="header">
+		<div class="title">
+			Announcements
+		</div>
+		<div class="button new-announcement">
+			New
+		</div>
+		<hr>
+	</div>
+	<div class="content">
+		<div class="announcement" *ngFor="let announcement of announcements">
+			<div class="announcement-header">
+				<div>{{ announcement.author.profile.firstName }}</div>
+				<div class="date">{{ announcement.date.toISOString().split('T')[0] }}</div>
+			</div>
+			<div class="announcement-title">
+				{{ announcement.title }}
+			</div>
+			<div class="announcement-body">
+				{{ announcement.message }}
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,80 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 1000px;
+  margin-top: 39px;
+}
+
+.title {
+  font-size: 48px;
+  color: var(--color-teal);
+  font-family: "Mulish";
+}
+
+.new-announcement {
+	font-weight: 400;
+  align-self: flex-end;
+  margin-right: 70px;
+  cursor: pointer;
+}
+
+hr {
+  width: 100%;
+  margin-top: 24px;
+  color: var(--color-tan);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+	width: 788px;
+	margin-top: 54px;
+	gap: 54px;
+}
+
+.announcement {
+  display: flex;
+  flex-direction: column;
+	align-items: center;
+  border-radius: 20px;
+  background-color: var(--color-navy);
+	padding: 36px 86px;
+	gap: 23px;
+}
+
+.announcement-header {
+  display: flex;
+  flex-direction: row;
+	justify-content: space-between;
+	width: 100%;
+  font-family: "Mulish";
+  font-weight: 400;
+  font-size: 24px;
+}
+
+.date {
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+  color: rgba(255, 255, 255, 0.63);
+}
+
+.announcement-title {
+  font-family: "Mulish";
+  font-weight: 400;
+  font-size: 24px;
+}
+
+.announcement-body {
+  font-family: "Inter", sans-serif;
+  font-weight: lighter;
+  font-size: 18px;
+	line-height: 36px;
+}
