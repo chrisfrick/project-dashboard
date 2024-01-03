@@ -34,7 +34,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     }
     
     @Override
-    public void createAnnouncement(Long id, AnnouncementDto announcementDto) {
+    public AnnouncementDto createAnnouncement(Long id, AnnouncementDto announcementDto) {
 
         if(!announcementDto.getAuthor().isAdmin()) {
             throw new NotAuthorizedException("You must be an Admin to create an Announcement"); 
@@ -53,7 +53,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
             Announcement newAnnouncement = announcementMapper.dtoToEntity(announcementDto);
             newAnnouncement.setCompany(companyRepository.getReferenceById(id));
             
-            announcementRepository.saveAndFlush(newAnnouncement);
+            return announcementMapper.entityToDto(announcementRepository.saveAndFlush(newAnnouncement));
         }
         
     }

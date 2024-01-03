@@ -20,8 +20,8 @@ public class AnnouncementController {
 	private final AnnouncementService announcementService;
 
 	@PostMapping("/company/{companyId}/announcements")
-	public void createAnnouncement(@PathVariable("id") Long id, @RequestBody AnnouncementDto announcementDto) {
-	    announcementService.createAnnouncement(id, announcementDto);
+	public AnnouncementDto createAnnouncement(@PathVariable("id") Long id, @RequestBody AnnouncementDto announcementDto) {
+	    return announcementService.createAnnouncement(id, announcementDto);
 	}
 	
 	@PutMapping("/{announcementId}")
