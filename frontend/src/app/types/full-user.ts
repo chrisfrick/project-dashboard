@@ -1,4 +1,7 @@
-export interface BasicUser {
+import { Company } from './company';
+import { Team } from './team';
+
+export interface FullUser {
   id?: number;
   profile: {
     firstName: string;
@@ -8,5 +11,7 @@ export interface BasicUser {
   };
   isAdmin: boolean;
   active: boolean;
-  status: boolean;
+  status: string;
+  companies: Company[];
+  teams: Team[];
 }
