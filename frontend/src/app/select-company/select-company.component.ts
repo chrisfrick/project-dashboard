@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-select-company',
@@ -8,13 +7,4 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class SelectCompanyComponent {
   companies: string[] = ["FedEx", "Cook Systems", "Google"]
-  isMenuOpen: boolean = false;
-  
-  companyForm: FormGroup = new FormGroup({
-    selectedCompany: new FormControl<string>('', [Validators.required])
-  })
-
-  toggleMenu() {
-    this.isMenuOpen = !this.isMenuOpen
-  }
 }

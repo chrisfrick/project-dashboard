@@ -13,6 +13,7 @@ import { SelectCompanyComponent } from './select-company/select-company.componen
 import { ReactiveFormsModule } from '@angular/forms';
 import { AnnouncementsComponent } from './announcements/announcements.component';
 import { NameCardComponent } from './teams/name-card/name-card.component';
+import { DropdownComponent } from './dropdown/dropdown.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { NameCardComponent } from './teams/name-card/name-card.component';
     SelectCompanyComponent,
     AnnouncementsComponent,
     NameCardComponent,
+    DropdownComponent,
   ],
   imports: [
     BrowserModule,

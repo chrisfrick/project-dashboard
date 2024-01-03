@@ -1,14 +1,4 @@
 <div class="container">
   <h2>Select Company</h2>
-	<div class="menu">
-		<div class="label" (click)="toggleMenu()">
-			<div class="title">Pick an option</div>
-			<img src="assets/Vector.svg" [ngClass]="isMenuOpen ? 'open' : ''">
-		</div>
-		<div class="options" *ngIf="isMenuOpen">
-			<div *ngFor="let company of companies">
-				{{ company }}
-			</div>
-		</div>
-	</div>
+	<app-dropdown [options]="companies" button="Save"></app-dropdown>
 </div>
