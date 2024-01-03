@@ -31,7 +31,7 @@ import lombok.RequiredArgsConstructor;
 public class UserServiceImpl implements UserService {
 	
 	private final UserRepository userRepository;
-  private final FullUserMapper fullUserMapper;
+    private final FullUserMapper fullUserMapper;
 	private final CredentialsMapper credentialsMapper;
     private final ProfileMapper profileMapper;
 
@@ -84,7 +84,6 @@ public class UserServiceImpl implements UserService {
             throw new BadRequestException("Profile field must be supplied");
         }
 
-
         Optional<User> existingUserOptional = userRepository.findUserByIdAndDeletedIsFalse(userId);
 
         if (existingUserOptional.isEmpty()) {
@@ -97,7 +96,6 @@ public class UserServiceImpl implements UserService {
             throw new NotFoundException("User with username " + userId + " is deleted");
         }
 
-        // Update the profile
         Profile profileToUpdate = existingUser.getProfile();
         ProfileDto updatedProfileDto = userRequestDto.getProfile();
 
@@ -116,7 +114,6 @@ public class UserServiceImpl implements UserService {
             }
         }
 
-        // Save and return the updated profile
         return fullUserMapper.entityToFullUserDto(userRepository.saveAndFlush(existingUser));
     }
 

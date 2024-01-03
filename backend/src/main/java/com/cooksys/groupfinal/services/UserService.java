@@ -11,7 +11,6 @@ public interface UserService {
 
 	FullUserDto login(CredentialsDto credentialsDto);
 
-
     FullUserDto getUserById(Long id);
 
     FullUserDto updateUserProfile(Long userId, UserRequestDto userRequestDto);
