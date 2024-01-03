@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { TeamService } from 'src/app/team.service';
+import { DataService } from 'src/app/data.service';
 import { Team } from 'src/app/types/team';
 
 @Component({
@@ -13,10 +13,10 @@ export class TeamCardComponent {
 
   projectCount = 0;
 
-  constructor(private teamService: TeamService) {}
+  constructor(private dataService: DataService) {}
 
   ngOnInit(): void {
-    this.teamService
+    this.dataService
       .getProjects(6, this.team.id!)
       .subscribe((projects) => (this.projectCount = projects.length));
   }

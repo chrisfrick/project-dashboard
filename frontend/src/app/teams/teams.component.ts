@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Team } from '../types/team';
-import { TeamService } from '../team.service';
+import { DataService } from '../data.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -13,13 +13,13 @@ export class TeamsComponent {
 
   constructor(
     private route: ActivatedRoute,
-    private teamService: TeamService
+    private dataService: DataService
   ) {}
 
   ngOnInit(): void {
     const routeParams = this.route.snapshot.paramMap;
     const companyIdFromRoute = Number(routeParams.get('companyId'));
-    this.teamService
+    this.dataService
       .getTeams(companyIdFromRoute)
       .subscribe((teams) => (this.teams = teams));
   }

@@ -8,7 +8,7 @@ import { FullUser } from './types/full-user';
 @Injectable({
   providedIn: 'root',
 })
-export class TeamService {
+export class DataService {
   constructor(private http: HttpClient) {}
 
   getTeams(companyId: number) {

@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { TeamService } from 'src/app/team.service';
+import { DataService } from 'src/app/data.service';
 import { FullUser } from 'src/app/types/full-user';
+import { Team } from 'src/app/types/team';
 
 @Component({
   selector: 'app-create-team',
@@ -11,15 +12,21 @@ import { FullUser } from 'src/app/types/full-user';
 export class CreateTeamComponent {
   users: FullUser[] = [];
 
+  newTeam: Team = {
+    name: '',
+    description: '',
+    teammates: [],
+  };
+
   constructor(
     private route: ActivatedRoute,
-    private teamService: TeamService
+    private dataService: DataService
   ) {}
 
   ngOnInit(): void {
     const routeParams = this.route.snapshot.paramMap;
     const companyIdFromRoute = Number(routeParams.get('companyId'));
-    this.teamService
+    this.dataService
       .getCompanyUsers(companyIdFromRoute)
       .subscribe((users) => (this.users = users));
   }
