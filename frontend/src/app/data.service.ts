@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { Team } from './types/team';
 import { Project } from './types/project';
 import { FullUser } from './types/full-user';
+import { BehaviorSubject } from 'rxjs';
+import { LoganRoy } from 'src/data';
 
 @Injectable({
   providedIn: 'root',
@@ -12,10 +14,20 @@ export class DataService {
   // TODO: REMOVE HARDCODED COMPANY
   currentCompanyId: number = 6;
 
+  // TODO: REMOVE HARDCODED USER
+  private currentUserSource = new BehaviorSubject<FullUser>(
+    LoganRoy as FullUser
+  );
+  currentUser = this.currentUserSource.asObservable();
+
   constructor(private http: HttpClient) {}
 
-  getTeams(companyId: number) {
-    return this.http.get<Team[]>(`api/company/${companyId}/teams`);
+  getTeams() {
+    return this.currentUserSource.getValue().admin
+      ? this.http.get<Team[]>(`api/company/${this.currentCompanyId}/teams`)
+      : this.http.get<Team[]>(
+          `api/team/userTeams/${this.currentUserSource.getValue().id}`
+        );
   }
 
   getProjects(companyId: number, teamId: number) {

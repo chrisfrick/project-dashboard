@@ -7,7 +7,7 @@ import { AnnouncementsComponent } from './announcements/announcements.component'
 const routes: Routes = [
   { path: 'select-company', component: SelectCompanyComponent },
   { path: 'announcements', component: AnnouncementsComponent },
-  { path: 'teams/:companyId', component: TeamsComponent },
+  { path: 'teams', component: TeamsComponent },
 ];
 
 @NgModule({

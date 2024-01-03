@@ -2,7 +2,11 @@
 <h1>Teams</h1>
 <div class="teams-container">
   <app-team-card *ngFor="let team of this.teams" [team]="team"></app-team-card>
-  <div class="add-team-card" (click)="createTeamShown = true">
+  <div
+    *ngIf="userIsAdmin"
+    class="add-team-card"
+    (click)="createTeamShown = true"
+  >
     <img class="plus-sign" src="../../assets/plus-sign.svg" />
     <p>New Team</p>
   </div>

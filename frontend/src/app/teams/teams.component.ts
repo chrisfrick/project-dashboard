@@ -9,8 +9,9 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./teams.component.css'],
 })
 export class TeamsComponent {
+  userIsAdmin: boolean = false;
   teams: Team[] = [];
-  createTeamShown: boolean = true;
+  createTeamShown: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -18,11 +19,12 @@ export class TeamsComponent {
   ) {}
 
   ngOnInit(): void {
-    const routeParams = this.route.snapshot.paramMap;
-    const companyIdFromRoute = Number(routeParams.get('companyId'));
-    this.dataService
-      .getTeams(companyIdFromRoute)
-      .subscribe((teams) => (this.teams = teams));
+    // const routeParams = this.route.snapshot.paramMap;
+    // const companyIdFromRoute = Number(routeParams.get('companyId'));
+    this.dataService.getTeams().subscribe((teams) => (this.teams = teams));
+    this.dataService.currentUser.subscribe(
+      (user) => (this.userIsAdmin = user.admin)
+    );
   }
 
   closeModal(): void {
