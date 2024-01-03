@@ -28,12 +28,12 @@ public class UserController {
     }
 
     // TODO 415 ERROR
-    @PatchMapping("/admin/{userId}")
+    @PatchMapping("/{userId}")
     public FullUserDto updateUserProfile(@PathVariable Long userId, @RequestBody UserRequestDto userRequestDto) {
         return userService.updateUserProfile(userId, userRequestDto);
     }
 
-    @GetMapping("/admin/users")
+    @GetMapping("/users")
     public List<FullUserDto> getAllUsers() {
         return userService.getAllUsers();
     }
@@ -45,7 +45,7 @@ public class UserController {
     }
 
 
-    @DeleteMapping("/admin/users/delete/{userId}")
+    @DeleteMapping("/users/delete/{userId}")
     public void deleteUser(@PathVariable Long userId, CredentialsDto adminCredentials) {
         userService.deleteUser(userId, adminCredentials);
     }

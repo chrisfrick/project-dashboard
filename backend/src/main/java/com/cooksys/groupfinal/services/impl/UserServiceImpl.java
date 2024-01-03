@@ -131,6 +131,13 @@ public class UserServiceImpl implements UserService {
             throw new BadRequestException("Credentials and Profile are required.");
         }
 
+        User adminUser = userRepository.findByCredentialsUsernameAndActiveTrue(credentials.getUsername())
+                .orElseThrow(() -> new NotFoundException("Admin user not found."));
+
+        if (!adminUser.isAdmin()) {
+            throw new NotAuthorizedException("Invalid credentials or not authorized.");
+        }
+
         String desiredUsername = credentials.getUsername();
         String password = credentials.getPassword();
         String email = profile.getEmail();
@@ -162,13 +169,13 @@ public class UserServiceImpl implements UserService {
         if (userIdToDelete == null || adminCredentials == null) {
             throw new BadRequestException("User ID to delete and admin credentials are required.");
         }
-//
-//        User adminUser = userRepository.findByCredentialsUsernameAndActiveTrue(adminCredentials.getUsername())
-//                .orElseThrow(() -> new NotFoundException("Admin user not found."));
-//
-//        if (!adminUser.isAdmin()) {
-//            throw new NotAuthorizedException("Invalid credentials or not authorized.");
-//        }
+
+        User adminUser = userRepository.findByCredentialsUsernameAndActiveTrue(adminCredentials.getUsername())
+                .orElseThrow(() -> new NotFoundException("Admin user not found."));
+
+        if (!adminUser.isAdmin()) {
+            throw new NotAuthorizedException("Invalid credentials or not authorized.");
+        }
 
         User userToDelete = userRepository.findById(userIdToDelete)
                 .orElseThrow(() -> new NotFoundException("User to delete not found."));
