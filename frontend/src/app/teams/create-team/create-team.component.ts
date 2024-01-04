@@ -70,7 +70,7 @@ export class CreateTeamComponent {
       description: this.createTeamForm.controls['description'].value,
       teammates: this.teamToCreate.teammates.map((user) => user as BasicUser),
     };
-    this.dataService.createTeam(newTeam);
+    this.dataService.createTeam(newTeam).subscribe((response) => {});
     this.teamToCreate = this.blankTeam;
     this.close.emit();
   }

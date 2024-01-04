@@ -383,3 +383,117 @@ export const LoganRoy: FullUser = {
     },
   ],
 };
+
+export const projectList = [
+  {
+    id: 10,
+    name: 'Shuttle Launch',
+    description: 'Shuttle launch in Japan to be led by COO, Roman Roy.',
+    active: true,
+    team: {
+      id: 13,
+      name: 'Team 3',
+      description: 'Roman & Gerri',
+      teammates: [
+        {
+          id: 21,
+          profile: {
+            firstName: 'Roman',
+            lastName: 'Roy',
+            email: 'rroy@email.com',
+            phone: '(333) 333-3333',
+          },
+          admin: false,
+          active: true,
+          status: 'PENDING',
+        },
+        {
+          id: 26,
+          profile: {
+            firstName: 'Gerri',
+            lastName: 'Kellman',
+            email: 'gkellman@email.com',
+            phone: '(888) 888-8888',
+          },
+          admin: true,
+          active: true,
+          status: 'JOINED',
+        },
+      ],
+    },
+  },
+  {
+    id: 10,
+    name: 'Shuttle Launch',
+    description: 'Shuttle launch in Japan to be led by COO, Roman Roy.',
+    active: true,
+    team: {
+      id: 13,
+      name: 'Team 3',
+      description: 'Roman & Gerri',
+      teammates: [
+        {
+          id: 21,
+          profile: {
+            firstName: 'Roman',
+            lastName: 'Roy',
+            email: 'rroy@email.com',
+            phone: '(333) 333-3333',
+          },
+          admin: false,
+          active: true,
+          status: 'PENDING',
+        },
+        {
+          id: 26,
+          profile: {
+            firstName: 'Gerri',
+            lastName: 'Kellman',
+            email: 'gkellman@email.com',
+            phone: '(888) 888-8888',
+          },
+          admin: true,
+          active: true,
+          status: 'JOINED',
+        },
+      ],
+    },
+  },
+  {
+    id: 10,
+    name: 'Shuttle Launch',
+    description: 'Shuttle launch in Japan to be led by COO, Roman Roy.',
+    active: true,
+    team: {
+      id: 13,
+      name: 'Team 3',
+      description: 'Roman & Gerri',
+      teammates: [
+        {
+          id: 21,
+          profile: {
+            firstName: 'Roman',
+            lastName: 'Roy',
+            email: 'rroy@email.com',
+            phone: '(333) 333-3333',
+          },
+          admin: false,
+          active: true,
+          status: 'PENDING',
+        },
+        {
+          id: 26,
+          profile: {
+            firstName: 'Gerri',
+            lastName: 'Kellman',
+            email: 'gkellman@email.com',
+            phone: '(888) 888-8888',
+          },
+          admin: true,
+          active: true,
+          status: 'JOINED',
+        },
+      ],
+    },
+  },
+];

@@ -31,6 +31,10 @@ h1 {
   font-size: 16.24px;
 }
 
+.add-team-card:hover {
+  cursor: pointer;
+}
+
 .plus-sign {
   margin-top: 20px;
 }
