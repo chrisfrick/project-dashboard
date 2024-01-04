@@ -101,4 +101,20 @@ public class ProjectServiceImpl implements ProjectService {
         projectToDelete.setActive(false);
         return projectMapper.entityToDto(projectRepository.save(projectToDelete));
     }
+
+    @Override
+    public ProjectDto updateProject(Long projectId, ProjectDto projectDto) {
+        // validation for null
+        if(projectDto == null || projectId == null) {
+            throw new BadRequestException("A team id, project id and projectDto are required.");
+        }
+        // fetch project by id
+        Project  project = findProject(projectDto.getId());
+
+        project.setName(projectDto.getName());
+        project.setDescription(projectDto.getDescription());
+        project.setActive(true);
+        return projectMapper.entityToDto(projectRepository.save(project));
+
+    }
 }
