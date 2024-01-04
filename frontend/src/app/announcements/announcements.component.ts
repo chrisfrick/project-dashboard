@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./announcements.component.css'],
 })
 export class AnnouncementsComponent {
+  userIsAdmin: boolean = false;
   announcements: Announcement[] = [];
   isCreateShown: boolean = false;
 
@@ -21,6 +22,11 @@ export class AnnouncementsComponent {
         this.router.navigateByUrl('/login');
       }
     });
+
+    // Check if logged-in user is admin
+    this.dataService.currentUser.subscribe(
+      (user) => (this.userIsAdmin = user!.admin)
+    );
 
     const author = {
       id: 1,
