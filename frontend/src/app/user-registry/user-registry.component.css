@@ -198,6 +198,11 @@ button:hover {
     font-size: 24px;
 }
 
+.overlay-error {
+    color: #F24E1E;
+    font-size: 20px;
+}
+
 .admin-bool select {
     background: #ffffff;
     color: var(--color-navy);

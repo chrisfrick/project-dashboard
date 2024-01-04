@@ -29,16 +29,31 @@ interface NewUser {
 export class UserRegistryComponent implements OnInit {
   makeAdminBools: string[] = ['true', 'false']
   userData: FullUser[] = [];
+  firstNameExist: boolean = true;
+  lastNameExist: boolean = true;
+  emailExist: boolean = true;
+  passwordsMatch: boolean = true;
+  passwordExist: boolean = true;
+  adminExist: boolean = true;
 
-  constructor(private router: Router, private dataService: DataService) {}
+  // create a new user
+  newUser: NewUser = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    admin: undefined,
+  };
+  constructor(private router: Router, private dataService: DataService) { }
 
   ngOnInit() {
     // CHANGE THIS TO THE USER COMPANY
-    this.dataService.getCompanyUsers(6).subscribe((testData) => {
-      this.userData = testData;
+    this.dataService.getCompanyUsers(6).subscribe((userData) => {
+      this.userData = userData;
       console.log('THIS IS TEH DATA')
       console.log(this.userData);
-    });    
+    });
   }
 
   // addUser overlay visibility
@@ -46,15 +61,16 @@ export class UserRegistryComponent implements OnInit {
   openAddUserOverlay() {
     this.addOverlayVisible = true;
     console.log(this.userData);
-
   }
   closeAddUserOverlay(): void {
+    this.resetNewUser();
     this.addOverlayVisible = false;
   }
 
   // addUser overlay visibility
   editOverlayVisible: boolean = false;
-  openEditUserOverlay() {
+  openEditUserOverlay(user: FullUser) {
+    console.log(user);
     this.editOverlayVisible = true;
   }
   closeEditUserOverlay(): void {
@@ -67,30 +83,60 @@ export class UserRegistryComponent implements OnInit {
     this.selectedOption = true;
   }
 
-  // create a new user
-  newUser: NewUser = {
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    admin: undefined,
-  };
+
   // add user to database/update table
   submitUser(): void {
-    console.log('NAME: ', this.newUser.firstName, this.newUser.lastName)
-    console.log('EMAIL: ', this.newUser.email)
-    console.log('PASSWORD: ', this.newUser.password, this.newUser.confirmPassword)
-    console.log('IS ADMIN: ', this.newUser.admin)
-    this.closeAddUserOverlay();
+    this.resetBools();
+    if (this.newUser.firstName === '') {
+      this.firstNameExist = false;
+    } else if (this.newUser.lastName === '') {
+      this.lastNameExist = false;
+    } else if (this.newUser.email === '') {
+      this.emailExist = false;
+    } else if (this.newUser.password !== this.newUser.confirmPassword) {
+      this.passwordsMatch = false;
+    } else if (this.newUser.password === '') {
+      this.passwordExist = false;
+    } else if (this.newUser.admin === undefined) {
+      this.adminExist = false;
+    } else {
+      this.dataService.createUser(this.newUser.firstName, this.newUser.lastName, 
+        this.newUser.email, this.newUser.password, this.newUser.admin).subscribe(
+        (user) => {
+          this.userData.push(user);
+          this.closeAddUserOverlay();
+        },
+        (error) => {
+          console.log('CREATE USER FAILED!!!')
+        }
+      );
+
+    }
   }
+
+  resetBools(): void {
+    this.firstNameExist = true;
+    this.lastNameExist = true;
+    this.emailExist = true;
+    this.passwordsMatch = true;
+    this.passwordExist = true;
+    this.adminExist = true;
+  }
+
+  resetNewUser(): void {
+    this.newUser.firstName = '';
+    this.newUser.lastName = '';
+    this.newUser.email = '';
+    this.newUser.password = '';
+    this.newUser.confirmPassword = '';
+    this.newUser.admin = undefined;
+  }
+  
 
   // some sort of delete user function
   deleteUser(): void {
 
   }
 
-  editUser(user: NewUser): void {
 
-  }
 }

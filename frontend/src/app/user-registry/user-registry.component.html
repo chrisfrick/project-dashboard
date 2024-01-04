@@ -45,7 +45,7 @@
                     <td>{{ data.status }}</td>
                     <td>
                         <img src="../../assets/edit-icon.png" class="table-icon" alt="edit"
-                            (click)="openEditUserOverlay()">
+                            (click)="openEditUserOverlay(data)">
                     </td>
                     <td>
                         <img src="../../assets/delete-icon.png" class="table-icon" alt="delete"
@@ -94,11 +94,11 @@
 
             <div class="overlay-input">
                 <div class="overlay-input-line">
-                    <input type="text" placeholder="password" [(ngModel)]="newUser.password">
+                    <input type="password" placeholder="password" [(ngModel)]="newUser.password">
                     <div class="input-line"></div>
                 </div>
                 <div class="overlay-input-line">
-                    <input type="text" placeholder="confirm password" [(ngModel)]="newUser.confirmPassword">
+                    <input type="password" placeholder="confirm password" [(ngModel)]="newUser.confirmPassword">
                     <div class="input-line"></div>
                 </div>
             </div>
@@ -108,8 +108,6 @@
             </div>
 
             <div class="admin-bool">
-                <!-- <app-dropdown [options]="makeAdminBools" [(ngModel)]="newUser.admin"></app-dropdown> -->
-
                 <select name="make-admin" id="make-admin" [(ngModel)]="newUser.admin" (focus)="onSelectFocus()">
                     <option *ngIf="!selectedOption" value="" disabled selected>Pick an option</option>
                     <option value="true">true</option>
@@ -117,6 +115,36 @@
                 </select>
             </div>
 
+            <div class="overlay-text" *ngIf="!passwordsMatch">
+                <div class="overlay-error">
+                    <p>Passwords do not match</p>
+                </div>
+            </div>
+            <div class="overlay-text" *ngIf="!firstNameExist">
+                <div class="overlay-error">
+                    <p>Please enter a first name</p>
+                </div>
+            </div>
+            <div class="overlay-text" *ngIf="!lastNameExist">
+                <div class="overlay-error">
+                    <p>Please enter a last name</p>
+                </div>
+            </div>
+            <div class="overlay-text" *ngIf="!emailExist">
+                <div class="overlay-error">
+                    <p>Please enter an email</p>
+                </div>
+            </div>
+            <div class="overlay-text" *ngIf="!passwordExist">
+                <div class="overlay-error">
+                    <p>Please enter a password</p>
+                </div>
+            </div>
+            <div class="overlay-text" *ngIf="!adminExist">
+                <div class="overlay-error">
+                    <p>Please select an admin option</p>
+                </div>
+            </div>
             <div>
                 <button (click)="submitUser()">Submit</button>
             </div>
@@ -171,18 +199,20 @@
                 <div class="overlay-text">
                     <p>Active: </p>
                 </div>
+                <!-- <select name="active" [(ngModel)]="newUser.active">
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select> -->
             </div>
 
             <div class="active-bool">
                 <div class="overlay-text">
                     <p>Admin: </p>
                 </div>
-            </div>
-
-            <div class="status-bool">
-                <div class="overlay-text">
-                    <p>Status: </p>
-                </div>
+                <select name="admin" [(ngModel)]="newUser.admin">
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
             </div>
 
             <div>

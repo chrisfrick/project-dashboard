@@ -21,14 +21,14 @@ export class DataService {
   private teamToViewSource = new BehaviorSubject<Team | null>(null);
   teamToView = this.teamToViewSource.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getTeams() {
     return this.currentUserSource.getValue()!.admin
       ? this.http.get<Team[]>(`api/company/${this.currentCompanyId}/teams`)
       : this.http.get<Team[]>(
-          `api/team/userTeams/${this.currentUserSource.getValue()!.id}`
-        );
+        `api/team/userTeams/${this.currentUserSource.getValue()!.id}`
+      );
   }
 
   getProjects(teamId: number) {
@@ -79,11 +79,28 @@ export class DataService {
   }
 
   login(username: string, password: string) {
-    let loginData = { 
-      username, 
-      password 
+    let loginData = {
+      username,
+      password
     };
     return this.http.post<FullUser>(`api/users/login`, loginData);
+  }
+
+  createUser(firstName: string, lastName: string, email: string, password: string, admin: boolean) {
+    let newUser = {
+      "credentials": {
+          "username": email,
+          "password": password
+      },
+      "profile": {
+          "firstName": firstName,
+          "lastName": lastName,
+          "email": email,
+          "phone": ""
+      },
+      "admin": admin
+  }
+    return this.http.post<FullUser>(`api/users`, newUser);
   }
 
 }
