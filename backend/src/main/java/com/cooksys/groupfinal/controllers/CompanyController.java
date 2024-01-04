@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 import com.cooksys.groupfinal.dtos.AnnouncementDto;
 import com.cooksys.groupfinal.dtos.FullUserDto;
 import com.cooksys.groupfinal.dtos.ProjectDto;
@@ -48,5 +48,11 @@ public class CompanyController {
 	public Set<ProjectDto> getAllProjects(@PathVariable Long companyId, @PathVariable Long teamId) {
 		return companyService.getAllProjects(companyId, teamId);
 	}
+
+    //POST  add a new project to the repository
+    @PostMapping("/{companyId}/teams/{teamId}/projects/{userId}")
+    public ProjectDto addProject(@PathVariable Long companyId,@PathVariable Long teamId, @PathVariable Long userId, @RequestBody ProjectDto projectDto) {
+        return companyService.addProject(companyId, teamId, userId, projectDto);
+    }
 
 }

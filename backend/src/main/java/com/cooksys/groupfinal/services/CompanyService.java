@@ -19,4 +19,6 @@ public interface CompanyService {
 
 	void createNewTeamForCompany(Long id, TeamDto teamDto);
 
+	ProjectDto addProject(Long companyId, Long teamId, Long userId, ProjectDto projectDto);
+
 }

@@ -11,6 +11,8 @@ import com.cooksys.groupfinal.entities.Announcement;
 public interface AnnouncementMapper {
 	
 	AnnouncementDto entityToDto(Announcement announcement);
+	
+	Announcement dtoToEntity(AnnouncementDto announcementDto);
 
   Set<AnnouncementDto> entitiesToDtos(Set<Announcement> announcement);
     
