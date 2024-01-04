@@ -1,7 +1,6 @@
 package com.cooksys.groupfinal.services.impl;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -15,6 +14,7 @@ import com.cooksys.groupfinal.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
 import com.cooksys.groupfinal.dtos.AnnouncementDto;
+import com.cooksys.groupfinal.dtos.BasicUserDto;
 import com.cooksys.groupfinal.dtos.FullUserDto;
 import com.cooksys.groupfinal.dtos.ProjectDto;
 import com.cooksys.groupfinal.dtos.TeamDto;
@@ -30,6 +30,7 @@ import com.cooksys.groupfinal.mappers.TeamMapper;
 import com.cooksys.groupfinal.mappers.FullUserMapper;
 import com.cooksys.groupfinal.repositories.CompanyRepository;
 import com.cooksys.groupfinal.repositories.TeamRepository;
+import com.cooksys.groupfinal.repositories.UserRepository;
 import com.cooksys.groupfinal.services.CompanyService;
 
 import lombok.RequiredArgsConstructor;
@@ -37,31 +38,33 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class CompanyServiceImpl implements CompanyService {
-	
+
 	private final CompanyRepository companyRepository;
 	private final TeamRepository teamRepository;
+	private final UserRepository userRepository;
 	private final FullUserMapper fullUserMapper;
 	private final AnnouncementMapper announcementMapper;
 	private final TeamMapper teamMapper;
 	private final ProjectMapper projectMapper;
 	private final ProjectRepository projectRepository;
-	private final UserRepository userRepository;
 	
 	private Company findCompany(Long id) {
-        Optional<Company> company = companyRepository.findById(id);
-        if (company.isEmpty()) {
-            throw new NotFoundException("A company with the provided id does not exist.");
-        }
-        return company.get();
-    }
-	
+		Optional<Company> company = companyRepository.findById(id);
+		if (company.isEmpty()) {
+			throw new NotFoundException("A company with the provided id does not exist.");
+		}
+		return company.get();
+	}
+
 	private Team findTeam(Long id) {
-        Optional<Team> team = teamRepository.findById(id);
-        if (team.isEmpty()) {
-            throw new NotFoundException("A team with the provided id does not exist.");
-        }
-        return team.get();
-    }
+    
+		Optional<Team> team = teamRepository.findById(id);
+		if (team.isEmpty()) {
+			throw new NotFoundException("A team with the provided id does not exist.");
+		}
+		return team.get();
+	}
+
 	private User findUser(Long userId) {
 		Optional<User> user = userRepository.findById(userId);
 		if ( user.isEmpty()) {
@@ -99,7 +102,8 @@ public class CompanyServiceImpl implements CompanyService {
 		Company company = findCompany(companyId);
 		Team team = findTeam(teamId);
 		if (!company.getTeams().contains(team)) {
-			throw new NotFoundException("A team with id " + teamId + " does not exist at company with id " + companyId + ".");
+			throw new NotFoundException(
+					"A team with id " + teamId + " does not exist at company with id " + companyId + ".");
 		}
 		Set<Project> filteredProjects = new HashSet<>();
 		team.getProjects().forEach(filteredProjects::add);
@@ -108,6 +112,35 @@ public class CompanyServiceImpl implements CompanyService {
 	}
 
 	@Override
+	public void createNewTeamForCompany(Long id, TeamDto teamDto) {
+		Company company = findCompany(id);
+		Set<Team> companyTeams = company.getTeams();
+		Team newTeam = new Team();
+		
+		String name = teamDto.getName();
+		String description = teamDto.getDescription();
+		Set<BasicUserDto> dtoTeammates = teamDto.getTeammates();
+		Set<User> teammates  = new HashSet<User>();
+		for (BasicUserDto dtoTeammate : dtoTeammates) {
+			Optional<User> user = userRepository.findById(dtoTeammate.getId());
+			teammates.add(user.get());
+		}
+		
+		newTeam.setName(name);
+		newTeam.setDescription(description);
+		newTeam.setCompany(company);
+		newTeam.setTeammates(teammates);
+		teamRepository.saveAndFlush(newTeam);
+		
+		for (User user : teammates) {
+			user.getTeams().add(newTeam);
+			userRepository.saveAndFlush(user);
+		}
+		
+		companyTeams.add(newTeam);
+		companyRepository.saveAndFlush(company);
+}
+
 	public ProjectDto addProject(Long companyId, Long teamId, Long userId, ProjectDto projectDto) {
 		// null validation
 		if(companyId == null || teamId == null || projectDto == null) {
@@ -142,5 +175,3 @@ public class CompanyServiceImpl implements CompanyService {
 
 		return projectMapper.entityToDto(project);
 	}
-
-}

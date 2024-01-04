@@ -17,5 +17,8 @@ public interface CompanyService {
 
 	Set<ProjectDto> getAllProjects(Long companyId, Long teamId);
 
+	void createNewTeamForCompany(Long id, TeamDto teamDto);
+
 	ProjectDto addProject(Long companyId, Long teamId, Long userId, ProjectDto projectDto);
+
 }
