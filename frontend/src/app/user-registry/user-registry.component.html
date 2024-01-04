@@ -27,11 +27,9 @@
                 <tr *ngFor="let data of userData">
                     <td>{{ data.profile.firstName + ' ' + data.profile.lastName }}</td>
                     <td>{{ data.profile.email }}</td>
-                    <td>
-                        <ng-container *ngFor="let team of data.teams; let last = last">
-                          {{ team.name }}<br *ngIf="!last" />
-                        </ng-container>
-                      </td>
+
+                    <td>{{ (data.teams && data.teams[0]) ? data.teams[0].name : '' }}</td>
+
                     <td>
                         <span [style.color]="data.active ? '#00B11C' : '#FF0000'">
                             {{ data.active ? 'YES' : 'NO' }}
@@ -49,7 +47,7 @@
                     </td>
                     <td>
                         <img src="../../assets/delete-icon.png" class="table-icon" alt="delete"
-                            (click)="deleteUser()">
+                            (click)="openDeleteUserOverlay(data)">
                     </td>
 
                 </tr>
@@ -169,54 +167,60 @@
 
             <div class="overlay-input">
                 <div class="overlay-input-line">
-                    <input type="text" placeholder="first name" [(ngModel)]="newUser.firstName">
+                    <input type="text" placeholder="first name" [(ngModel)]="editUser.firstName">
                     <div class="input-line"></div>
                 </div>
 
                 <div class="overlay-input-line">
-                    <input type="text" placeholder="last name" [(ngModel)]="newUser.lastName">
+                    <input type="text" placeholder="last name" [(ngModel)]="editUser.lastName">
                     <div class="input-line"></div>
                 </div>
             </div>
 
             <div class="overlay-input">
                 <div class="overlay-input-line">
-                    <input type="text" placeholder="email" [(ngModel)]="newUser.email">
+                    <input type="text" placeholder="email" [(ngModel)]="editUser.email">
                     <div class="input-line"></div>
                 </div>
             </div>
 
             <div class="overlay-input">
                 <div class="overlay-input-line">
-                    <input type="text" placeholder="team" [(ngModel)]="newUser.password">
+                    <input type="text" placeholder="phone" [(ngModel)]="editUser.phoneNumber">
                     <div class="input-line"></div>
                 </div>
             </div>
 
-
-
-            <div class="active-bool">
+            <div class="admin-bool">
                 <div class="overlay-text">
-                    <p>Active: </p>
+                    <p>Admin Status</p>
                 </div>
-                <!-- <select name="active" [(ngModel)]="newUser.active">
-                    <option value="true">Yes</option>
-                    <option value="false">No</option>
-                </select> -->
-            </div>
-
-            <div class="active-bool">
-                <div class="overlay-text">
-                    <p>Admin: </p>
-                </div>
-                <select name="admin" [(ngModel)]="newUser.admin">
+                <select name="admin" [(ngModel)]="editUser.admin">
                     <option value="true">Yes</option>
                     <option value="false">No</option>
                 </select>
             </div>
 
             <div>
-                <button (click)="submitUser()">Submit</button>
+                <button (click)="editUserApply()">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete User Overlay -->
+<div *ngIf="deleteOverlayVisible" class="overlay-page">
+    <div class="overlay-content">
+        <div class="overlay-content-innards">
+
+            <div class="admin-bool">
+                <div class="overlay-text">
+                    <p>Are you sure you want to delete {{deleteUser.userToDelete}} from existence?</p>
+                </div>
+                <div class="delete-overlay-buttons">
+                    <button (click)="deleteUserApply()">Delete!</button>
+                    <button (click)="closeDeleteUserOverlay()">Cancel</button>
+                </div>
             </div>
         </div>
     </div>

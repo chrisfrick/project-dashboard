@@ -91,18 +91,40 @@ export class DataService {
   createUser(firstName: string, lastName: string, email: string, password: string, admin: boolean) {
     let newUser = {
       "credentials": {
-          "username": email,
-          "password": password
+        "username": email,
+        "password": password
       },
       "profile": {
-          "firstName": firstName,
-          "lastName": lastName,
-          "email": email,
-          "phone": ""
+        "firstName": firstName,
+        "lastName": lastName,
+        "email": email,
+        "phone": ""
       },
       "admin": admin
-  }
+    }
     return this.http.post<FullUser>(`api/users`, newUser);
+  }
+
+  editUser(userId: number, firstName: string, lastName: string, email: string, phoneNumber: string, admin: boolean) {
+    console.log('got here editting user', userId);
+    let edittedUser = {
+      "credentials": {
+        "username": 'username',
+        "password": 'password'
+      },
+      "profile": {
+        "firstName": firstName,
+        "lastName": lastName,
+        "email": email,
+        "phone": phoneNumber
+      },
+      "admin": admin
+    }
+    return this.http.patch<FullUser>(`api/users/${userId}`, edittedUser);
+  }
+
+  deleteUser(userId: number) {
+    return this.http.delete(`api/users/users/delete/${userId}`);
   }
 
 }
