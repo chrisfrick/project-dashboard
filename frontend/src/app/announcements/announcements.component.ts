@@ -20,13 +20,11 @@ export class AnnouncementsComponent {
     this.dataService.currentUser.subscribe((user) => {
       if (!user) {
         this.router.navigateByUrl('/login');
+        return;
       }
+      // Check if logged-in user is admin
+      this.userIsAdmin = user.admin;
     });
-
-    // Check if logged-in user is admin
-    this.dataService.currentUser.subscribe(
-      (user) => (this.userIsAdmin = user!.admin)
-    );
 
     const author = {
       id: 1,
