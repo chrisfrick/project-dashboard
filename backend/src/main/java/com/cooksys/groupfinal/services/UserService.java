@@ -17,7 +17,7 @@ public interface UserService {
 
     List<FullUserDto> getAllUsers();
 
-    FullUserDto createUser(CredentialsDto credentials, ProfileDto profile);
+    FullUserDto createUser(CredentialsDto credentials, ProfileDto profile, boolean admin);
 
     void deleteUser(Long userIdToDelete);
 }
