@@ -45,24 +45,26 @@ export class UserRegistryComponent implements OnInit {
     confirmPassword: '',
     admin: undefined,
   };
+
   constructor(private router: Router, private dataService: DataService) { }
 
   ngOnInit() {
     // CHANGE THIS TO THE USER COMPANY
-    this.dataService.getCompanyUsers(6).subscribe((userData) => {
+    this.dataService.getCompanyUsers().subscribe((userData) => {
       this.userData = userData;
-      console.log('THIS IS TEH DATA')
+      console.log('THIS IS TEH DATA');
       console.log(this.userData);
-    this.dataService.currentUser.subscribe((user) => {
-      // Check for logged-in user
-      if (!user) {
-        this.router.navigateByUrl('/login');
-        return;
-      }
-      // Disallow non-admin access
-      if (!user.admin) {
-        this.router.navigateByUrl('/announcements');
-      }
+      this.dataService.currentUser.subscribe((user) => {
+        // Check for logged-in user
+        if (!user) {
+          this.router.navigateByUrl('/login');
+          return;
+        }
+        // Disallow non-admin access
+        if (!user.admin) {
+          this.router.navigateByUrl('/announcements');
+        }
+      });
     });
   }
 
@@ -110,16 +112,16 @@ export class UserRegistryComponent implements OnInit {
     } else if (this.newUser.admin === undefined) {
       this.adminExist = false;
     } else {
-      this.dataService.createUser(this.newUser.firstName, this.newUser.lastName, 
+      this.dataService.createUser(this.newUser.firstName, this.newUser.lastName,
         this.newUser.email, this.newUser.password, this.newUser.admin).subscribe(
-        (user) => {
-          this.userData.push(user);
-          this.closeAddUserOverlay();
-        },
-        (error) => {
-          console.log('CREATE USER FAILED!!!')
-        }
-      );
+          (user) => {
+            this.userData.push(user);
+            this.closeAddUserOverlay();
+          },
+          (error) => {
+            console.log('CREATE USER FAILED!!!')
+          }
+        );
     }
   }
 
@@ -146,5 +148,4 @@ export class UserRegistryComponent implements OnInit {
 
   }
 
-  editUser(user: UserData): void {}
 }
