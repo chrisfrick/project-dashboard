@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import Announcement from '../types/announcement';
+import { DataService } from '../data.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-announcements',
@@ -10,7 +12,16 @@ export class AnnouncementsComponent {
   announcements: Announcement[] = [];
   isCreateShown: boolean = false;
 
+  constructor(private dataService: DataService, private router: Router) {}
+
   ngOnInit(): void {
+    // Check for logged in currentUser
+    this.dataService.currentUser.subscribe((user) => {
+      if (!user) {
+        this.router.navigateByUrl('/login');
+      }
+    });
+
     const author = {
       id: 1,
       profile: {
