@@ -12,7 +12,9 @@ import { LoganRoy } from 'src/data';
 })
 export class DataService {
   // TODO: REMOVE HARDCODED COMPANY
-  currentCompanyId: number = 6;
+  private currentCompanySource = new BehaviorSubject<number>(6);
+  currentCompanyId = this.currentCompanySource.asObservable();
+  // currentCompanyId: number = 6;
 
   // TODO: REMOVE HARDCODED USER
   private currentUserSource = new BehaviorSubject<FullUser>(LoganRoy);
@@ -43,5 +45,10 @@ export class DataService {
       `api/company/${this.currentCompanyId}/team`,
       team
     );
+  }
+
+  updateCompanyId(newCompanyId: number) {
+    console.log('updated');
+    this.currentCompanySource.next(newCompanyId);
   }
 }

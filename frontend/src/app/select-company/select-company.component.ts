@@ -1,15 +1,31 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FullUser } from '../types/full-user';
+import { DataService } from '../data.service';
+import { Company } from '../types/company';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-select-company',
   templateUrl: './select-company.component.html',
-  styleUrls: ['./select-company.component.css']
+  styleUrls: ['./select-company.component.css'],
 })
-export class SelectCompanyComponent {
-  companies: string[] = ["FedEx", "Cook Systems", "Google"]
+export class SelectCompanyComponent implements OnInit {
+  companies: Company[] = [];
+  companyNames: string[] = ['FedEx', 'Cook Systems', 'Google'];
+
+  constructor(private dataService: DataService, private router: Router) {}
+
+  ngOnInit(): void {
+    this.dataService.currentUser.subscribe((currentUser) => {
+      this.companies = currentUser.companies;
+      this.companyNames = this.companies.map((company) => company.name);
+    });
+  }
 
   onSubmit(selection: string) {
-    console.log(selection)
+    let newCompanyId =
+      this.companies.find((company) => company.name === selection)?.id ?? -1;
+    this.dataService.updateCompanyId(newCompanyId);
+    this.router.navigateByUrl('/announcements');
   }
 }
