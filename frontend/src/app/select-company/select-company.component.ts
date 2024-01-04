@@ -16,6 +16,17 @@ export class SelectCompanyComponent implements OnInit {
   constructor(private dataService: DataService, private router: Router) {}
 
   ngOnInit(): void {
+    this.dataService.currentUser.subscribe((user) => {
+      // Check currentUser exists
+      if (!user) {
+        this.router.navigateByUrl('/login');
+      }
+      // Only allow admins to select a company
+      if (!user?.admin) {
+        this.router.navigateByUrl('/announcements');
+      }
+    });
+
     this.dataService.currentUser.subscribe((currentUser) => {
       this.companies = currentUser?.companies;
       this.companyNames = this.companies?.map((company) => company.name);
@@ -23,8 +34,9 @@ export class SelectCompanyComponent implements OnInit {
   }
 
   onSubmit(selection: string) {
-    let newCompanyId =
-      this.companies?.find((company) => company.name === selection)?.id;
+    let newCompanyId = this.companies?.find(
+      (company) => company.name === selection
+    )?.id;
     this.dataService.updateCompanyId(newCompanyId);
     this.router.navigateByUrl('/announcements');
   }
