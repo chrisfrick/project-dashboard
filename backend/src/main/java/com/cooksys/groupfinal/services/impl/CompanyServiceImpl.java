@@ -175,3 +175,4 @@ public class CompanyServiceImpl implements CompanyService {
 
 		return projectMapper.entityToDto(project);
 	}
+}
