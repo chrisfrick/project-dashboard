@@ -16,10 +16,17 @@ export class TeamsComponent {
   constructor(private router: Router, private dataService: DataService) {}
 
   ngOnInit(): void {
-    this.dataService.getTeams().subscribe((teams) => (this.teams = teams));
-    this.dataService.currentUser.subscribe(
-      (user) => (this.userIsAdmin = user!.admin)
-    );
+    // Check for logged in currentUser
+    this.dataService.currentUser.subscribe((user) => {
+      if (!user) {
+        this.router.navigateByUrl('/login');
+        return;
+      }
+      this.dataService.getTeams().subscribe((teams) => (this.teams = teams));
+      this.dataService.currentUser.subscribe(
+        (user) => (this.userIsAdmin = user!.admin)
+      );
+    });
   }
 
   navigateToProjectView(teamToView: Team) {
