@@ -17,7 +17,7 @@ export class TeamCardComponent {
 
   ngOnInit(): void {
     this.dataService
-      .getProjects(6, this.team.id!)
+      .getProjects(this.team.id!)
       .subscribe((projects) => (this.projectCount = projects.length));
   }
 }

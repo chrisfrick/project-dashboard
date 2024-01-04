@@ -1,7 +1,11 @@
 <app-navbar> </app-navbar>
 <h1>Teams</h1>
 <div class="teams-container">
-  <app-team-card *ngFor="let team of this.teams" [team]="team"></app-team-card>
+  <app-team-card
+    *ngFor="let team of this.teams"
+    [team]="team"
+    (click)="navigateToProjectView(team)"
+  ></app-team-card>
   <div
     *ngIf="userIsAdmin"
     class="add-team-card"

@@ -18,6 +18,9 @@ export class DataService {
   private currentUserSource = new BehaviorSubject<FullUser>(LoganRoy);
   currentUser = this.currentUserSource.asObservable();
 
+  private teamToViewSource = new BehaviorSubject<Team | null>(null);
+  teamToView = this.teamToViewSource.asObservable();
+
   constructor(private http: HttpClient) {}
 
   getTeams() {
@@ -28,9 +31,9 @@ export class DataService {
         );
   }
 
-  getProjects(companyId: number, teamId: number) {
+  getProjects(teamId: number) {
     return this.http.get<Project[]>(
-      `api/company/${companyId}/teams/${teamId}/projects`
+      `api/company/${this.currentCompanyId}/teams/${teamId}/projects`
     );
   }
 
@@ -43,5 +46,9 @@ export class DataService {
       `api/company/${this.currentCompanyId}/team`,
       team
     );
+  }
+
+  setTeamToView(team: Team): void {
+    this.teamToViewSource.next(team);
   }
 }
