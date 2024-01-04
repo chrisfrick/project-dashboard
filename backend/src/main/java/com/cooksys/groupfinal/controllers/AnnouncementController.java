@@ -19,6 +19,7 @@ public class AnnouncementController {
 	
 	private final AnnouncementService announcementService;
 
+	//May change path
 	@PostMapping("/company/{companyId}/announcements")
 	public AnnouncementDto createAnnouncement(@PathVariable("id") Long id, @RequestBody AnnouncementDto announcementDto) {
 	    return announcementService.createAnnouncement(id, announcementDto);
