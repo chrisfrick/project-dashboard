@@ -49,7 +49,7 @@ export class DataService {
 
   createTeam(team: Team) {
     return this.http.post<Team>(
-      `api/company/${this.currentCompanyId}/team`,
+      `api/company/${this.currentCompanyId}/teams`,
       team
     );
   }
