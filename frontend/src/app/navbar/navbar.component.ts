@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { NameToInitialPipe } from './name-to-initial.pipe';
+import { FullUser } from '../types/full-user';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-navbar',
@@ -7,12 +9,19 @@ import { NameToInitialPipe } from './name-to-initial.pipe';
   styleUrls: ['./navbar.component.css', '../../styles.css'],
 })
 export class NavbarComponent {
-  firstName = 'Kenny';
-  lastName = 'Worth';
+  currentUser: FullUser | null = null;
+  // firstName = 'Kenny';
+  // lastName = 'Worth';
 
-  userIsAdmin = false;
+  // userIsAdmin = false;
 
   isMenuOpen = false;
+
+  constructor(private dataService: DataService) {}
+
+  ngOnInit(): void {
+    this.dataService.currentUser.subscribe((user) => (this.currentUser = user));
+  }
 
   toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;
