@@ -10,5 +10,6 @@ public interface ProjectService {
 
     ProjectDto updateProjectDescription(Long projectId, ProjectDto projectDto);
 
-    ProjectDto addProject(ProjectDto projectDto);
+
+    ProjectDto deactivateProject(Long projectId, Long userId);
 }

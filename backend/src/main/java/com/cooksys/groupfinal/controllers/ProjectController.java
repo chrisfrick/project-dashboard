@@ -27,20 +27,22 @@ public class ProjectController {
 	}
 
 	//**********
-	//POST
+	//DELETE
 	//request { ProjectDto }
 	//response ProjectDto
+	// deactivate the project
 	//************
 
-	@PostMapping
-	public ProjectDto addProject(@RequestBody ProjectDto projectDto) {
-		return projectService.addProject(projectDto);
+	@DeleteMapping("{projectId}/{userId}")
+	public ProjectDto deactivateProject(@PathVariable Long projectId,@PathVariable Long userId) {
+		return projectService.deactivateProject(projectId, userId);
 	}
 
 	//*********
 	// GET
 	//request {projectId}
 	//response ProjectDto
+	//fetch project based on the provided id
 	@GetMapping("{id}")
 	public ProjectDto getProjectById(@PathVariable ("id") Long id) {
 		return projectService.getProjectById(id);
