@@ -20,9 +20,10 @@ export class SelectCompanyComponent implements OnInit {
       // Check currentUser exists
       if (!user) {
         this.router.navigateByUrl('/login');
+        return;
       }
       // Only allow admins to select a company
-      if (!user?.admin) {
+      if (!user.admin) {
         this.router.navigateByUrl('/announcements');
       }
     });
