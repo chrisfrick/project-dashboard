@@ -1,9 +1,19 @@
 <app-navbar> </app-navbar>
 <h1>Projects for {{ team?.name }}</h1>
 <div class="project-list">
-  <div class="new-project-button">New</div>
+  <div
+    *ngIf="userIsAdmin"
+    class="new-project-button"
+    (click)="createProjectShown = true"
+  >
+    New
+  </div>
   <app-project-card
     *ngFor="let project of projects"
     [project]="project"
   ></app-project-card>
 </div>
+<app-create-project
+  *ngIf="createProjectShown"
+  (close)="closeCreateProject()"
+></app-create-project>

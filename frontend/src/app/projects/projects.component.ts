@@ -3,6 +3,7 @@ import { DataService } from '../data.service';
 import { Team } from '../types/team';
 import { Router } from '@angular/router';
 import { Project } from '../types/project';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-projects',
@@ -10,7 +11,10 @@ import { Project } from '../types/project';
   styleUrls: ['./projects.component.css'],
 })
 export class ProjectsComponent {
+  userIsAdmin: boolean = false;
   team: Team | null = null;
+  createProjectShown: boolean = true;
+
   projects: Project[] = [
     {
       id: 10,
@@ -128,6 +132,9 @@ export class ProjectsComponent {
   constructor(private dataService: DataService, private router: Router) {}
 
   ngOnInit(): void {
+    this.dataService.currentUser.subscribe(
+      (user) => (this.userIsAdmin = user.admin)
+    );
     this.dataService.teamToView.subscribe((team) => (this.team = team));
     if (!this.team || !this.team.id) {
       // this.router.navigateByUrl('/teams');
@@ -136,5 +143,9 @@ export class ProjectsComponent {
       //   .getProjects(this.team.id!)
       //   .subscribe((projects) => (this.projects = projects));
     }
+  }
+
+  closeCreateProject(): void {
+    this.createProjectShown = false;
   }
 }

@@ -51,4 +51,18 @@ export class DataService {
   setTeamToView(team: Team): void {
     this.teamToViewSource.next(team);
   }
+
+  createProject(name: string, description: string) {
+    const team = this.teamToViewSource.getValue();
+    let projectToCreate = {
+      name,
+      description,
+      active: true,
+      team: team as Team,
+    };
+    return this.http.post<Project>(
+      `api/company/${this.currentCompanyId}/teams/${team?.id}/projects`,
+      projectToCreate
+    );
+  }
 }
