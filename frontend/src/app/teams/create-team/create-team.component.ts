@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 import { DataService } from 'src/app/data.service';
 import { BasicUser } from 'src/app/types/basic-user';
 import { FullUser } from 'src/app/types/full-user';
@@ -29,16 +28,11 @@ export class CreateTeamComponent {
     selectedUser: new FormControl<FullUser | undefined>(undefined),
   });
 
-  constructor(
-    private route: ActivatedRoute,
-    private dataService: DataService
-  ) {}
+  constructor(private dataService: DataService) {}
 
   ngOnInit(): void {
-    const routeParams = this.route.snapshot.paramMap;
-    const companyIdFromRoute = Number(routeParams.get('companyId'));
     this.dataService
-      .getCompanyUsers(companyIdFromRoute)
+      .getCompanyUsers()
       .subscribe((users) => (this.userPool = users));
   }
 

@@ -41,8 +41,10 @@ export class DataService {
     return this.http.patch<Project>(`api/projects/${project.id}`, project);
   }
 
-  getCompanyUsers(companyId: number) {
-    return this.http.get<FullUser[]>(`api/company/${companyId}/users`);
+  getCompanyUsers() {
+    return this.http.get<FullUser[]>(
+      `api/company/${this.currentCompanyId}/users`
+    );
   }
 
   createTeam(team: Team) {
