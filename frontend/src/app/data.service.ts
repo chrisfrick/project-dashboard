@@ -21,14 +21,27 @@ export class DataService {
   private teamToViewSource = new BehaviorSubject<Team | null>(null);
   teamToView = this.teamToViewSource.asObservable();
 
+  private teamsSource = new BehaviorSubject<Team[]>([]);
+  teams = this.teamsSource.asObservable();
+
   constructor(private http: HttpClient) {}
 
-  getTeams() {
-    return this.currentUserSource.getValue()!.admin
-      ? this.http.get<Team[]>(`api/company/${this.currentCompanyId}/teams`)
-      : this.http.get<Team[]>(
+  loadTeams() {
+    if (this.currentUserSource.getValue()!.admin) {
+      this.http
+        .get<Team[]>(`api/company/${this.currentCompanyId}/teams`)
+        .subscribe((teams) => this.teamsSource.next(teams));
+    } else {
+      this.http
+        .get<Team[]>(
           `api/team/userTeams/${this.currentUserSource.getValue()!.id}`
-        );
+        )
+        .subscribe((teams) => this.teamsSource.next(teams));
+    }
+  }
+
+  addTeam(newTeam: Team) {
+    this.teamsSource.next([...this.teamsSource.getValue(), newTeam]);
   }
 
   getProjects(teamId: number) {

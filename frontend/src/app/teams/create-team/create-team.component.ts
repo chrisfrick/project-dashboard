@@ -50,8 +50,7 @@ export class CreateTeamComponent {
     // Remove teammember from selection options
     this.userPool = this.userPool.filter((user) => user.id !== userToAdd.id);
     this.userDisplayNames = this.userDisplayNames.filter(
-      (userDisplayName) =>
-        userDisplayName != this.getUserDisplayName(userToAdd)
+      (userDisplayName) => userDisplayName != this.getUserDisplayName(userToAdd)
     );
   }
 
@@ -63,7 +62,10 @@ export class CreateTeamComponent {
       ),
     };
     this.userPool = [...this.userPool, userToRemove];
-    this.userDisplayNames = [...this.userDisplayNames, this.getUserDisplayName(userToRemove)]
+    this.userDisplayNames = [
+      ...this.userDisplayNames,
+      this.getUserDisplayName(userToRemove),
+    ];
   }
 
   getUserDisplayName(user: FullUser): string {
@@ -84,7 +86,9 @@ export class CreateTeamComponent {
       description: this.createTeamForm.controls['description'].value,
       teammates: this.teamToCreate.teammates.map((user) => user as BasicUser),
     };
-    this.dataService.createTeam(newTeam).subscribe((response) => {});
+    this.dataService.createTeam(newTeam).subscribe((response) => {
+      this.dataService.loadTeams();
+    });
     this.teamToCreate = this.blankTeam;
     this.close.emit();
   }
