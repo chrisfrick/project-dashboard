@@ -24,7 +24,7 @@ interface NewUser {
 @Component({
   selector: 'app-user-registry',
   templateUrl: './user-registry.component.html',
-  styleUrls: ['./user-registry.component.css']
+  styleUrls: ['./user-registry.component.css'],
 })
 export class UserRegistryComponent implements OnInit {
   makeAdminBools: string[] = ['true', 'false']
@@ -53,6 +53,16 @@ export class UserRegistryComponent implements OnInit {
       this.userData = userData;
       console.log('THIS IS TEH DATA')
       console.log(this.userData);
+    this.dataService.currentUser.subscribe((user) => {
+      // Check for logged-in user
+      if (!user) {
+        this.router.navigateByUrl('/login');
+        return;
+      }
+      // Disallow non-admin access
+      if (!user.admin) {
+        this.router.navigateByUrl('/announcements');
+      }
     });
   }
 
@@ -110,7 +120,6 @@ export class UserRegistryComponent implements OnInit {
           console.log('CREATE USER FAILED!!!')
         }
       );
-
     }
   }
 
@@ -131,12 +140,11 @@ export class UserRegistryComponent implements OnInit {
     this.newUser.confirmPassword = '';
     this.newUser.admin = undefined;
   }
-  
 
   // some sort of delete user function
   deleteUser(): void {
 
   }
 
-
+  editUser(user: UserData): void {}
 }

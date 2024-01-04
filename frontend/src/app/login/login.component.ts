@@ -5,7 +5,7 @@ import { DataService } from '../data.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css', '../../styles.css']
+  styleUrls: ['./login.component.css', '../../styles.css'],
 })
 export class LoginComponent {
   username = '';
@@ -13,6 +13,7 @@ export class LoginComponent {
   showLoginError = false;
 
   constructor(private router: Router, private dataService: DataService) { }
+
 
   // admin
   //   user: thisismycompany
@@ -36,5 +37,4 @@ export class LoginComponent {
       }
     );
   }
-
 }
