@@ -29,12 +29,12 @@ public class TeamController {
 		
 	}
 	
-	@PutMapping("/admin/{teamId}")
+	@PutMapping("/{teamId}")
 	public TeamDto updateTeamById (@PathVariable Long teamId, @RequestBody TeamDto teamDto) {
 		return teamService.updateTeamById(teamId, teamDto);
 	}
 	
-	@DeleteMapping("/admin/{teamId}")
+	@DeleteMapping("/{teamId}")
 	public TeamDto deleteTeamById (@PathVariable Long teamId) {
 		return teamService.deleteTeamById(teamId);
 	}
