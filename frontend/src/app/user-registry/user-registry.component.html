@@ -24,28 +24,32 @@
             </thead>
 
             <tbody id="reg-users-display">
-                <tr *ngFor="let rowData of dummyData">
-                    <td>{{ rowData.name }}</td>
-                    <td>{{ rowData.email }}</td>
-                    <td>{{ rowData.team }}</td>
+                <tr *ngFor="let data of userData">
+                    <td>{{ data.profile.firstName + ' ' + data.profile.lastName }}</td>
+                    <td>{{ data.profile.email }}</td>
                     <td>
-                        <span [style.color]="rowData.active ? '#00B11C' : '#FF0000'">
-                            {{ rowData.active ? 'YES' : 'NO' }}
+                        <ng-container *ngFor="let team of data.teams; let last = last">
+                          {{ team.name }}<br *ngIf="!last" />
+                        </ng-container>
+                      </td>
+                    <td>
+                        <span [style.color]="data.active ? '#00B11C' : '#FF0000'">
+                            {{ data.active ? 'YES' : 'NO' }}
                         </span>
                     </td>
                     <td>
-                        <span [style.color]="rowData.admin ? '#00B11C' : '#FF0000'">
-                            {{ rowData.admin ? 'YES' : 'NO' }}
+                        <span [style.color]="data.admin ? '#00B11C' : '#FF0000'">
+                            {{ data.admin ? 'YES' : 'NO' }}
                         </span>
                     </td>
-                    <td>{{ rowData.status }}</td>
+                    <td>{{ data.status }}</td>
                     <td>
-                        <img src="../../assets/edit-icon.png" class="table-icon" alt="edit" 
-                            (click)="editUser(rowData)">
+                        <img src="../../assets/edit-icon.png" class="table-icon" alt="edit"
+                            (click)="openEditUserOverlay()">
                     </td>
                     <td>
                         <img src="../../assets/delete-icon.png" class="table-icon" alt="delete"
-                            (click)="deleteUser(rowData)">
+                            (click)="deleteUser()">
                     </td>
 
                 </tr>
@@ -55,8 +59,8 @@
     </div>
 </div>
 
-<!-- Overlay -->
-<div *ngIf="overlayVisible" class="overlay-page">
+<!-- Add User Overlay -->
+<div *ngIf="addOverlayVisible" class="overlay-page">
     <div class="overlay-content">
         <div class="overlay-content-innards">
 
@@ -104,11 +108,81 @@
             </div>
 
             <div class="admin-bool">
+                <!-- <app-dropdown [options]="makeAdminBools" [(ngModel)]="newUser.admin"></app-dropdown> -->
+
                 <select name="make-admin" id="make-admin" [(ngModel)]="newUser.admin" (focus)="onSelectFocus()">
-                    <option *ngIf="!selectedOption" value="" disabled selected>Select an option</option>
-                    <option value="true">True</option>
-                    <option value="false">False</option>
+                    <option *ngIf="!selectedOption" value="" disabled selected>Pick an option</option>
+                    <option value="true">true</option>
+                    <option value="false">false</option>
                 </select>
+            </div>
+
+            <div>
+                <button (click)="submitUser()">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Edit User Overlay -->
+<div *ngIf="editOverlayVisible" class="overlay-page">
+    <div class="overlay-content">
+        <div class="overlay-content-innards">
+
+            <div class="close-button" (click)="closeEditUserOverlay()">
+                <div class="close-circle">
+                    <div class="close-cross">
+                        <div class="line line1"></div>
+                        <div class="line line2"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="overlay-input">
+                <div class="overlay-input-line">
+                    <input type="text" placeholder="first name" [(ngModel)]="newUser.firstName">
+                    <div class="input-line"></div>
+                </div>
+
+                <div class="overlay-input-line">
+                    <input type="text" placeholder="last name" [(ngModel)]="newUser.lastName">
+                    <div class="input-line"></div>
+                </div>
+            </div>
+
+            <div class="overlay-input">
+                <div class="overlay-input-line">
+                    <input type="text" placeholder="email" [(ngModel)]="newUser.email">
+                    <div class="input-line"></div>
+                </div>
+            </div>
+
+            <div class="overlay-input">
+                <div class="overlay-input-line">
+                    <input type="text" placeholder="team" [(ngModel)]="newUser.password">
+                    <div class="input-line"></div>
+                </div>
+            </div>
+
+
+
+            <div class="active-bool">
+                <div class="overlay-text">
+                    <p>Active: </p>
+                </div>
+            </div>
+
+            <div class="active-bool">
+                <div class="overlay-text">
+                    <p>Admin: </p>
+                </div>
+            </div>
+
+            <div class="status-bool">
+                <div class="overlay-text">
+                    <p>Status: </p>
+                </div>
             </div>
 
             <div>

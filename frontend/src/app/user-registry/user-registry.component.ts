@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { DataService } from '../data.service';
+import { Router } from '@angular/router';
+import { FullUser } from '../types/full-user';
 
-interface UserData {
+interface FullUserData {
   name: string;
   email: string;
   team: string;
@@ -24,23 +27,38 @@ interface NewUser {
   styleUrls: ['./user-registry.component.css']
 })
 export class UserRegistryComponent implements OnInit {
-  dummyData: UserData[] = [  // CHANGE TO CALL GET REQUEST FOR USERS
-    { name: 'Chris Purnell', email: 'asdf@gmail.com', team: 'Mcdon', active: true, admin: false, status: 'JOINED' },
-    { name: 'Frank Fournier', email: 'eopiorogm@gmail.com', team: 'popeyes', active: false, admin: true, status: 'PENDING' },
-    { name: 'Will Marttala', email: 'hrthr@gmail.com', team: '', active: false, admin: false, status: 'PENDING' },
-    { name: 'Helena Makendegue', email: 'hh35rthhrthrth@gmail.com', team: 'hererherherherhre', active: true, admin: true, status: 'PENDING' },
-  ];
+  makeAdminBools: string[] = ['true', 'false']
+  userData: FullUser[] = [];
+
+  constructor(private router: Router, private dataService: DataService) {}
 
   ngOnInit() {
+    // CHANGE THIS TO THE USER COMPANY
+    this.dataService.getCompanyUsers(6).subscribe((testData) => {
+      this.userData = testData;
+      console.log('THIS IS TEH DATA')
+      console.log(this.userData);
+    });    
   }
 
-  // overlay visibility
-  overlayVisible: boolean = false;
+  // addUser overlay visibility
+  addOverlayVisible: boolean = false;
   openAddUserOverlay() {
-    this.overlayVisible = true;
+    this.addOverlayVisible = true;
+    console.log(this.userData);
+
   }
   closeAddUserOverlay(): void {
-    this.overlayVisible = false;
+    this.addOverlayVisible = false;
+  }
+
+  // addUser overlay visibility
+  editOverlayVisible: boolean = false;
+  openEditUserOverlay() {
+    this.editOverlayVisible = true;
+  }
+  closeEditUserOverlay(): void {
+    this.editOverlayVisible = false;
   }
 
   // dropdown text dissapears
@@ -68,11 +86,11 @@ export class UserRegistryComponent implements OnInit {
   }
 
   // some sort of delete user function
-  deleteUser(user: UserData): void {
+  deleteUser(): void {
 
   }
 
-  editUser(user: UserData): void {
+  editUser(user: NewUser): void {
 
   }
 }

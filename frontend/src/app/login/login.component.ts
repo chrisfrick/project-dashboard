@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-login',
@@ -9,19 +10,31 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   username = '';
   password = '';
-  showLoginPopup = false;
+  showLoginError = false;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private dataService: DataService) { }
 
+  // admin
+  //   user: thisismycompany
+  //   pass: getyourowncompany
+  // non admin
+  //   user: pinky
+  //   pass: futureceoofwaystar
   checkLogin(): void {
-    if (this.username === 'a' && this.password === 'a') { // change to HTTP request for authentication
-      // if (admin)
-        // route to select company 
-      // else
-        // route to announcements
-    } else {
-      this.showLoginPopup = true;
-    }
+    this.dataService.login(this.username, this.password).subscribe(
+      (user) => {
+        console.log('got response', user);
+        this.dataService.setCurrentUser(user)
+        if (user.admin) {
+          this.router.navigateByUrl('/select-company');
+        } else {
+          this.router.navigateByUrl('/announcements');
+        }
+      },
+      (error) => {
+        this.showLoginError = true;
+      }
+    );
   }
 
 }
