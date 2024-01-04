@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
 import { Router } from '@angular/router';
+import { FullUser } from '../types/full-user';
 
-interface UserData {
+interface FullUserData {
   name: string;
   email: string;
   team: string;
@@ -26,72 +27,14 @@ interface NewUser {
   styleUrls: ['./user-registry.component.css'],
 })
 export class UserRegistryComponent implements OnInit {
-  dummyData: UserData[] = [
-    // CHANGE TO CALL GET REQUEST FOR USERS
-    {
-      name: 'Chris Purnell',
-      email: 'asdf@gmail.com',
-      team: 'Mcdon',
-      active: true,
-      admin: false,
-      status: 'JOINED',
-    },
-    {
-      name: 'Frank Fournier',
-      email: 'eopiorogm@gmail.com',
-      team: 'popeyes',
-      active: false,
-      admin: true,
-      status: 'PENDING',
-    },
-    {
-      name: 'Will Marttala',
-      email: 'hrthr@gmail.com',
-      team: '',
-      active: false,
-      admin: false,
-      status: 'PENDING',
-    },
-    {
-      name: 'Helena Makendegue',
-      email: 'hh35rthhrthrth@gmail.com',
-      team: 'hererherherherhre',
-      active: true,
-      admin: true,
-      status: 'PENDING',
-    },
-  ];
-
-  constructor(private dataService: DataService, private router: Router) {}
-
-  ngOnInit() {
-    this.dataService.currentUser.subscribe((user) => {
-      // Check for logged-in user
-      if (!user) {
-        this.router.navigateByUrl('/login');
-        return;
-      }
-      // Disallow non-admin access
-      if (!user.admin) {
-        this.router.navigateByUrl('/announcements');
-      }
-    });
-  }
-
-  // overlay visibility
-  overlayVisible: boolean = false;
-  openAddUserOverlay() {
-    this.overlayVisible = true;
-  }
-  closeAddUserOverlay(): void {
-    this.overlayVisible = false;
-  }
-
-  // dropdown text dissapears
-  selectedOption: boolean | null = null;
-  onSelectFocus() {
-    this.selectedOption = true;
-  }
+  makeAdminBools: string[] = ['true', 'false']
+  userData: FullUser[] = [];
+  firstNameExist: boolean = true;
+  lastNameExist: boolean = true;
+  emailExist: boolean = true;
+  passwordsMatch: boolean = true;
+  passwordExist: boolean = true;
+  adminExist: boolean = true;
 
   // create a new user
   newUser: NewUser = {
@@ -102,23 +45,107 @@ export class UserRegistryComponent implements OnInit {
     confirmPassword: '',
     admin: undefined,
   };
-  // add user to database/update table
-  onSubmit(admin: string) {
-    this.newUser.admin = admin === 'True';
-    this.closeAddUserOverlay();
 
-    console.log('NAME: ', this.newUser.firstName, this.newUser.lastName);
-    console.log('EMAIL: ', this.newUser.email);
-    console.log(
-      'PASSWORD: ',
-      this.newUser.password,
-      this.newUser.confirmPassword
-    );
-    console.log('IS ADMIN: ', this.newUser.admin);
+  constructor(private router: Router, private dataService: DataService) { }
+
+  ngOnInit() {
+    // CHANGE THIS TO THE USER COMPANY
+    this.dataService.getCompanyUsers().subscribe((userData) => {
+      this.userData = userData;
+      console.log('THIS IS TEH DATA');
+      console.log(this.userData);
+      this.dataService.currentUser.subscribe((user) => {
+        // Check for logged-in user
+        if (!user) {
+          this.router.navigateByUrl('/login');
+          return;
+        }
+        // Disallow non-admin access
+        if (!user.admin) {
+          this.router.navigateByUrl('/announcements');
+        }
+      });
+    });
+  }
+
+  // addUser overlay visibility
+  addOverlayVisible: boolean = false;
+  openAddUserOverlay() {
+    this.addOverlayVisible = true;
+    console.log(this.userData);
+  }
+  closeAddUserOverlay(): void {
+    this.resetNewUser();
+    this.addOverlayVisible = false;
+  }
+
+  // addUser overlay visibility
+  editOverlayVisible: boolean = false;
+  openEditUserOverlay(user: FullUser) {
+    console.log(user);
+    this.editOverlayVisible = true;
+  }
+  closeEditUserOverlay(): void {
+    this.editOverlayVisible = false;
+  }
+
+  // dropdown text dissapears
+  selectedOption: boolean | null = null;
+  onSelectFocus() {
+    this.selectedOption = true;
+  }
+
+
+  // add user to database/update table
+  submitUser(): void {
+    this.resetBools();
+    if (this.newUser.firstName === '') {
+      this.firstNameExist = false;
+    } else if (this.newUser.lastName === '') {
+      this.lastNameExist = false;
+    } else if (this.newUser.email === '') {
+      this.emailExist = false;
+    } else if (this.newUser.password !== this.newUser.confirmPassword) {
+      this.passwordsMatch = false;
+    } else if (this.newUser.password === '') {
+      this.passwordExist = false;
+    } else if (this.newUser.admin === undefined) {
+      this.adminExist = false;
+    } else {
+      this.dataService.createUser(this.newUser.firstName, this.newUser.lastName,
+        this.newUser.email, this.newUser.password, this.newUser.admin).subscribe(
+          (user) => {
+            this.userData.push(user);
+            this.closeAddUserOverlay();
+          },
+          (error) => {
+            console.log('CREATE USER FAILED!!!')
+          }
+        );
+    }
+  }
+
+  resetBools(): void {
+    this.firstNameExist = true;
+    this.lastNameExist = true;
+    this.emailExist = true;
+    this.passwordsMatch = true;
+    this.passwordExist = true;
+    this.adminExist = true;
+  }
+
+  resetNewUser(): void {
+    this.newUser.firstName = '';
+    this.newUser.lastName = '';
+    this.newUser.email = '';
+    this.newUser.password = '';
+    this.newUser.confirmPassword = '';
+    this.newUser.admin = undefined;
   }
 
   // some sort of delete user function
-  deleteUser(user: UserData): void {}
+  deleteUser(): void {
 
-  editUser(user: UserData): void {}
+  }
+
 }

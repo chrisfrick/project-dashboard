@@ -92,4 +92,35 @@ export class DataService {
   updateCompanyId(newCompanyId: number | undefined) {
     this.currentCompanyId = newCompanyId;
   }
+
+  login(username: string, password: string) {
+    let loginData = {
+      username,
+      password,
+    };
+    return this.http.post<FullUser>(`api/users/login`, loginData);
+  }
+
+  createUser(
+    firstName: string,
+    lastName: string,
+    email: string,
+    password: string,
+    admin: boolean
+  ) {
+    let newUser = {
+      credentials: {
+        username: email,
+        password: password,
+      },
+      profile: {
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        phone: '',
+      },
+      admin: admin,
+    };
+    return this.http.post<FullUser>(`api/users`, newUser);
+  }
 }
