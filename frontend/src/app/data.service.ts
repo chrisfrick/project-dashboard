@@ -12,7 +12,7 @@ import { LoganRoy } from 'src/data';
 })
 export class DataService {
   // TODO: REMOVE HARDCODED COMPANY
-  private currentCompanySource = new BehaviorSubject<number>(6);
+  private currentCompanySource = new BehaviorSubject<number | undefined>(6);
   currentCompanyId = this.currentCompanySource.asObservable();
   // currentCompanyId: number = 6;
 
@@ -76,7 +76,7 @@ export class DataService {
     this.currentUserSource.next(user);
   }
 
-  updateCompanyId(newCompanyId: number) {
+  updateCompanyId(newCompanyId: number | undefined) {
     this.currentCompanySource.next(newCompanyId);
   }
 }

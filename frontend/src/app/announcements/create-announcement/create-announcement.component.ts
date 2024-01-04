@@ -21,7 +21,7 @@ export class CreateAnnouncementComponent implements OnInit {
   ngOnInit(): void {
     this.dataService.currentUser.subscribe((currentUser) => {
       this.currentUserFullName =
-        currentUser.profile.firstName + ' ' + currentUser.profile.lastName;
+        currentUser?.profile.firstName + ' ' + currentUser?.profile.lastName;
     });
   }
 
