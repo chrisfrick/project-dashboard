@@ -13,6 +13,7 @@ export const LoganRoy: FullUser = {
   status: 'PENDING',
   companies: [
     {
+      // id: 1,
       id: 6,
       name: 'waystar|ROYCO',
       description:
@@ -341,6 +342,7 @@ export const LoganRoy: FullUser = {
       ],
     },
     {
+      // id: 2,
       id: 7,
       name: 'Vought',
       description:
