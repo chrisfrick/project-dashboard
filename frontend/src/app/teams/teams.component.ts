@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Team } from '../types/team';
 import { DataService } from '../data.service';
-import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-teams',
@@ -13,18 +13,18 @@ export class TeamsComponent {
   teams: Team[] = [];
   createTeamShown: boolean = false;
 
-  constructor(
-    private route: ActivatedRoute,
-    private dataService: DataService
-  ) {}
+  constructor(private router: Router, private dataService: DataService) {}
 
   ngOnInit(): void {
-    // const routeParams = this.route.snapshot.paramMap;
-    // const companyIdFromRoute = Number(routeParams.get('companyId'));
     this.dataService.getTeams().subscribe((teams) => (this.teams = teams));
     this.dataService.currentUser.subscribe(
-      (user) => (this.userIsAdmin = user.admin)
+      (user) => (this.userIsAdmin = user!.admin)
     );
+  }
+
+  navigateToProjectView(teamToView: Team) {
+    this.dataService.setTeamToView(teamToView);
+    this.router.navigateByUrl('/projects');
   }
 
   closeModal(): void {

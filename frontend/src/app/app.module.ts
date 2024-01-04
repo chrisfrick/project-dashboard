@@ -18,6 +18,10 @@ import { NameCardComponent } from './teams/name-card/name-card.component';
 import { DropdownComponent } from './dropdown/dropdown.component';
 import { LoginComponent } from './login/login.component';
 import { UserRegistryComponent } from './user-registry/user-registry.component';
+import { ProjectsComponent } from './projects/projects.component';
+import { ProjectCardComponent } from './projects/project-card/project-card.component';
+import { CreateProjectComponent } from './projects/create-project/create-project.component';
+import { EditProjectComponent } from './projects/edit-project/edit-project.component';
 
 @NgModule({
   declarations: [
@@ -31,8 +35,12 @@ import { UserRegistryComponent } from './user-registry/user-registry.component';
     AnnouncementsComponent,
     NameCardComponent,
     DropdownComponent,
-    LoginComponent, 
+    LoginComponent,
     UserRegistryComponent,
+    ProjectsComponent,
+    ProjectCardComponent,
+    CreateProjectComponent,
+    EditProjectComponent,
   ],
   imports: [
     BrowserModule,
