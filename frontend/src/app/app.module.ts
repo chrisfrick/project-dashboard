@@ -19,6 +19,7 @@ import { DropdownComponent } from './dropdown/dropdown.component';
 import { LoginComponent } from './login/login.component';
 import { UserRegistryComponent } from './user-registry/user-registry.component';
 import { AnnouncementComponent } from './announcements/announcement/announcement.component';
+import { CreateAnnouncementComponent } from './announcements/create-announcement/create-announcement.component';
 
 @NgModule({
   declarations: [
@@ -32,8 +33,10 @@ import { AnnouncementComponent } from './announcements/announcement/announcement
     AnnouncementsComponent,
     NameCardComponent,
     DropdownComponent,
-    LoginComponent, 
-    UserRegistryComponent, AnnouncementComponent,
+    LoginComponent,
+    UserRegistryComponent,
+    AnnouncementComponent,
+    CreateAnnouncementComponent,
   ],
   imports: [
     BrowserModule,

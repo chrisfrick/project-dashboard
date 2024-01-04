@@ -20,11 +20,21 @@
   font-family: "Mulish";
 }
 
-.new-announcement {
-	font-weight: 400;
+.create {
+  position: relative;
   align-self: flex-end;
   margin-right: 70px;
+}
+
+.button {
+	font-weight: 400;
   cursor: pointer;
+}
+
+.create-popup {
+  position: absolute;
+  left: -198%;
+  top: 140%;
 }
 
 hr {

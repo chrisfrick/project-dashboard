@@ -8,6 +8,7 @@ import Announcement from '../types/announcement';
 })
 export class AnnouncementsComponent {
   announcements: Announcement[] = [];
+  isCreateShown: boolean = false;
 
   ngOnInit(): void {
     const author = {
@@ -44,5 +45,13 @@ export class AnnouncementsComponent {
         author: author,
       },
     ];
+  }
+
+  toggleCreate() {
+    this.isCreateShown = !this.isCreateShown;
+  }
+
+  closeCreate() {
+    this.isCreateShown = false;
   }
 }

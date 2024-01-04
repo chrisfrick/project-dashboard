@@ -2,10 +2,17 @@
 <div class="container">
   <div class="header">
     <div class="title">Announcements</div>
-    <div class="button new-announcement">New</div>
+    <div class="create">
+      <div class="button" (click)="toggleCreate()">New</div>
+      <app-create-announcement
+        class="create-popup"
+        *ngIf="isCreateShown"
+        (closeCreate)="closeCreate()"
+      ></app-create-announcement>
+    </div>
     <hr />
   </div>
   <div class="content" *ngFor="let announcement of announcements">
-		<app-announcement [announcement]="announcement"></app-announcement>
+    <app-announcement [announcement]="announcement"></app-announcement>
   </div>
 </div>
