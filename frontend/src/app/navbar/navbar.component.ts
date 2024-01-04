@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NameToInitialPipe } from './name-to-initial.pipe';
 import { FullUser } from '../types/full-user';
 import { DataService } from '../data.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -10,14 +11,10 @@ import { DataService } from '../data.service';
 })
 export class NavbarComponent {
   currentUser: FullUser | null = null;
-  // firstName = 'Kenny';
-  // lastName = 'Worth';
-
-  // userIsAdmin = false;
 
   isMenuOpen = false;
 
-  constructor(private dataService: DataService) {}
+  constructor(private dataService: DataService, private router: Router) {}
 
   ngOnInit(): void {
     this.dataService.currentUser.subscribe((user) => (this.currentUser = user));
@@ -25,5 +22,10 @@ export class NavbarComponent {
 
   toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  handleLogout(): void {
+    this.dataService.setCurrentUser(null);
+    this.router.navigateByUrl('/');
   }
 }

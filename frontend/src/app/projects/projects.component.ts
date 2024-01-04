@@ -23,7 +23,7 @@ export class ProjectsComponent {
 
   ngOnInit(): void {
     this.dataService.currentUser.subscribe(
-      (user) => (this.userIsAdmin = user.admin)
+      (user) => (this.userIsAdmin = user!.admin)
     );
     this.dataService.teamToView.subscribe((team) => (this.team = team));
     if (!this.team || !this.team.id) {

@@ -18,7 +18,7 @@ export class TeamsComponent {
   ngOnInit(): void {
     this.dataService.getTeams().subscribe((teams) => (this.teams = teams));
     this.dataService.currentUser.subscribe(
-      (user) => (this.userIsAdmin = user.admin)
+      (user) => (this.userIsAdmin = user!.admin)
     );
   }
 

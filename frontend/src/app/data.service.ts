@@ -15,7 +15,7 @@ export class DataService {
   currentCompanyId: number = 6;
 
   // TODO: REMOVE HARDCODED USER
-  private currentUserSource = new BehaviorSubject<FullUser>(LoganRoy);
+  private currentUserSource = new BehaviorSubject<FullUser | null>(LoganRoy);
   currentUser = this.currentUserSource.asObservable();
 
   private teamToViewSource = new BehaviorSubject<Team | null>(null);
@@ -24,10 +24,10 @@ export class DataService {
   constructor(private http: HttpClient) {}
 
   getTeams() {
-    return this.currentUserSource.getValue().admin
+    return this.currentUserSource.getValue()!.admin
       ? this.http.get<Team[]>(`api/company/${this.currentCompanyId}/teams`)
       : this.http.get<Team[]>(
-          `api/team/userTeams/${this.currentUserSource.getValue().id}`
+          `api/team/userTeams/${this.currentUserSource.getValue()!.id}`
         );
   }
 
@@ -68,5 +68,9 @@ export class DataService {
       `api/company/${this.currentCompanyId}/teams/${team?.id}/projects`,
       projectToCreate
     );
+  }
+
+  setCurrentUser(user: FullUser | null) {
+    this.currentUserSource.next(user);
   }
 }
