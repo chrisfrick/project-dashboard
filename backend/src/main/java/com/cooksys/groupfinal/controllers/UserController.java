@@ -39,7 +39,7 @@ public class UserController {
 
     @PostMapping()
     public FullUserDto createUser(@RequestBody UserRequestDto userRequestDto) {
-        return userService.createUser(userRequestDto.getCredentials(), userRequestDto.getProfile());
+        return userService.createUser(userRequestDto.getCredentials(), userRequestDto.getProfile(), userRequestDto.isAdmin());
     }
 
     @DeleteMapping("/users/delete/{userId}")

@@ -122,7 +122,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-        public FullUserDto createUser(CredentialsDto credentials, ProfileDto profile) {
+        public FullUserDto createUser(CredentialsDto credentials, ProfileDto profile, boolean admin) {
 
         if (credentials == null || profile == null) {
             throw new BadRequestException("Credentials and Profile are required.");
@@ -140,6 +140,7 @@ public class UserServiceImpl implements UserService {
             User newUser = new User();
             newUser.setCredentials(credentialsMapper.dtoToEntity(credentials));
             newUser.setProfile(profileMapper.dtoToEntity(profile));
+            newUser.setAdmin(admin);
             User savedUser = userRepository.saveAndFlush(newUser);
             return fullUserMapper.entityToFullUserDto(savedUser);
         }
