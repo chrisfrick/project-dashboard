@@ -345,8 +345,7 @@ export const LoganRoy: FullUser = {
       // id: 2,
       id: 7,
       name: 'Vought',
-      description:
-        `Today's heroes.  Tomorrow's future.`,
+      description: `Today's heroes.  Tomorrow's future.`,
       teams: [],
       employees: [],
     },

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { DataService } from '../data.service';
+import { Router } from '@angular/router';
 
 interface UserData {
   name: string;
@@ -60,7 +62,21 @@ export class UserRegistryComponent implements OnInit {
     },
   ];
 
-  ngOnInit() {}
+  constructor(private dataService: DataService, private router: Router) {}
+
+  ngOnInit() {
+    this.dataService.currentUser.subscribe((user) => {
+      // Check for logged-in user
+      if (!user) {
+        this.router.navigateByUrl('/login');
+        return;
+      }
+      // Disallow non-admin access
+      if (!user.admin) {
+        this.router.navigateByUrl('/announcements');
+      }
+    });
+  }
 
   // overlay visibility
   overlayVisible: boolean = false;

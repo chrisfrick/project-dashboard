@@ -2,7 +2,7 @@
 <div class="container">
   <div class="header">
     <div class="title">Announcements</div>
-    <div class="create">
+    <div *ngIf="userIsAdmin" class="create">
       <div class="button" (click)="toggleCreate()">New</div>
       <app-create-announcement
         class="create-popup"
