@@ -1,9 +1,9 @@
 package com.cooksys.groupfinal.dtos;
 
-import java.util.Set;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Set;
 
 @NoArgsConstructor
 @Data
@@ -14,8 +14,6 @@ public class TeamDto {
     private String name;
     
     private String description;
-    
-    private Set<ProjectDto> projects;
     
     private Set<BasicUserDto> teammates;
 
