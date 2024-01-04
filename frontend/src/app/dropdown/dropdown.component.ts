@@ -8,6 +8,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class DropdownComponent {
   @Input() options: string[] | undefined = undefined;
   @Input() button: string = '';
+  @Input() isMultipleChoice: boolean = false;
   @Output() passSelection = new EventEmitter<string>();
 
   isMenuOpen: boolean = false;
@@ -28,10 +29,10 @@ export class DropdownComponent {
   onClick(selection: string) {
     this.selection = selection;
     this.toggleMenu();
-    if (!this.isButton()) this.submit();
+    if (!this.isButton()) this.emitSelection();
   }
 
-  submit() {
+  emitSelection() {
     this.passSelection.emit(this.selection);
   }
 }

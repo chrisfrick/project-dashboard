@@ -103,17 +103,11 @@
                 <p>Make user an admin role?</p>
             </div>
 
-            <div class="admin-bool">
-                <select name="make-admin" id="make-admin" [(ngModel)]="newUser.admin" (focus)="onSelectFocus()">
-                    <option *ngIf="!selectedOption" value="" disabled selected>Select an option</option>
-                    <option value="true">True</option>
-                    <option value="false">False</option>
-                </select>
-            </div>
-
-            <div>
-                <button (click)="submitUser()">Submit</button>
-            </div>
+            <app-dropdown
+                [options]="['True', 'False']"
+                button="Submit"
+                (passSelection)="onSubmit($event)"
+            ></app-dropdown>
         </div>
     </div>
 </div>

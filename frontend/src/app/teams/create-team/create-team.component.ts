@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { DataService } from 'src/app/data.service';
+import { NameToInitialPipe } from 'src/app/navbar/name-to-initial.pipe';
 import { BasicUser } from 'src/app/types/basic-user';
-import { FullUser } from 'src/app/types/full-user';
+import { FullUser, defaultFullUser } from 'src/app/types/full-user';
 
 @Component({
   selector: 'app-create-team',
@@ -13,6 +14,7 @@ export class CreateTeamComponent {
   @Output() close: EventEmitter<void> = new EventEmitter<void>();
 
   userPool: FullUser[] = [];
+  userDisplayNames: string[] = [];
 
   blankTeam = {
     name: '',
@@ -31,14 +33,15 @@ export class CreateTeamComponent {
   constructor(private dataService: DataService) {}
 
   ngOnInit(): void {
-    this.dataService
-      .getCompanyUsers()
-      .subscribe((users) => (this.userPool = users));
+    this.dataService.getCompanyUsers().subscribe((users) => {
+      this.userPool = users;
+      this.userDisplayNames = this.userPool.map((user) =>
+        this.getUserDisplayName(user)
+      );
+    });
   }
 
-  addTeamMember(): void {
-    let userToAdd: FullUser =
-      this.createTeamForm.controls['selectedUser'].value;
+  addTeamMember(userToAdd: FullUser): void {
     this.teamToCreate = {
       ...this.teamToCreate,
       teammates: [...this.teamToCreate.teammates, userToAdd],
@@ -46,6 +49,10 @@ export class CreateTeamComponent {
 
     // Remove teammember from selection options
     this.userPool = this.userPool.filter((user) => user.id !== userToAdd.id);
+    this.userDisplayNames = this.userDisplayNames.filter(
+      (userDisplayName) =>
+        userDisplayName != this.getUserDisplayName(userToAdd)
+    );
   }
 
   removeTeamMember(userToRemove: FullUser): void {
@@ -56,6 +63,19 @@ export class CreateTeamComponent {
       ),
     };
     this.userPool = [...this.userPool, userToRemove];
+    this.userDisplayNames = [...this.userDisplayNames, this.getUserDisplayName(userToRemove)]
+  }
+
+  getUserDisplayName(user: FullUser): string {
+    return user.profile.firstName + ' ' + user.profile.lastName[0] + '.';
+  }
+
+  onClick(selection: string) {
+    let userToAdd =
+      this.userPool.find(
+        (user) => this.getUserDisplayName(user) === selection
+      ) ?? defaultFullUser();
+    this.addTeamMember(userToAdd);
   }
 
   onSubmit(): void {

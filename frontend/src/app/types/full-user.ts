@@ -15,3 +15,20 @@ export interface FullUser {
   companies: Company[];
   teams: Team[];
 }
+
+export function defaultFullUser(): FullUser {
+  return {
+    id: -1,
+    profile: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      phone: '',
+    },
+    admin: false,
+    active: false,
+    status: '',
+    companies: [],
+    teams: [],
+  }
+}

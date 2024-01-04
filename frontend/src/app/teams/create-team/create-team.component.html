@@ -20,12 +20,11 @@
       type="text"
     />
     <h2>Select Members</h2>
-    <select formControlName="selectedUser" (change)="addTeamMember()">
-      <option selected disabled>Pick an option</option>
-      <option *ngFor="let user of userPool" [ngValue]="user">
-        {{ user.profile.firstName }} {{ user.profile.lastName | nameToInitial }}
-      </option>
-    </select>
+    <app-dropdown
+      [options]="userDisplayNames"
+      [isMultipleChoice]="true"
+      (passSelection)="onClick($event)"
+    ></app-dropdown>
     <div class="name-cards">
       <ng-container *ngFor="let user of teamToCreate.teammates">
         <div class="name-row">

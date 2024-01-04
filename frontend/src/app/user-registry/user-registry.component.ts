@@ -103,7 +103,10 @@ export class UserRegistryComponent implements OnInit {
     admin: undefined,
   };
   // add user to database/update table
-  submitUser(): void {
+  onSubmit(admin: string) {
+    this.newUser.admin = admin === 'True';
+    this.closeAddUserOverlay();
+
     console.log('NAME: ', this.newUser.firstName, this.newUser.lastName);
     console.log('EMAIL: ', this.newUser.email);
     console.log(
@@ -112,7 +115,6 @@ export class UserRegistryComponent implements OnInit {
       this.newUser.confirmPassword
     );
     console.log('IS ADMIN: ', this.newUser.admin);
-    this.closeAddUserOverlay();
   }
 
   // some sort of delete user function
