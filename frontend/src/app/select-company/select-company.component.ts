@@ -26,6 +26,7 @@ export class SelectCompanyComponent implements OnInit {
     let newCompanyId =
       this.companies?.find((company) => company.name === selection)?.id;
     this.dataService.updateCompanyId(newCompanyId);
+    console.log(newCompanyId)
     this.router.navigateByUrl('/announcements');
   }
 }

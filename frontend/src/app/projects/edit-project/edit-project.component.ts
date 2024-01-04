@@ -39,12 +39,12 @@ export class EditProjectComponent {
     this.close.emit();
   }
 
-  onSubmit(): void {
+  onSubmit(active: string): void {
     let updatedProject: Project = {
       ...this.project!,
       name: this.editProjectForm.controls['name'].value,
       description: this.editProjectForm.controls['description'].value,
-      active: this.editProjectForm.controls['active'].value,
+      active: active === 'True'
     };
     this.dataService.updateProject(updatedProject).subscribe((response) => {});
     this.close.emit();
