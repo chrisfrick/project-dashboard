@@ -1,7 +1,7 @@
 package com.cooksys.groupfinal.mappers;
 
 import com.cooksys.groupfinal.dtos.ProfileDto;
-import com.cooksys.groupfinal.entities.Profile;
+import com.cooksys.groupfinal.embeddables.Profile;
 
 import org.mapstruct.Mapper;
 

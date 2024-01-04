@@ -3,14 +3,10 @@ package com.cooksys.groupfinal.entities;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
+import com.cooksys.groupfinal.embeddables.Credentials;
+import com.cooksys.groupfinal.embeddables.Profile;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -26,9 +22,19 @@ public class User {
 	private Long id;
 
   @Embedded
+  @AttributeOverrides({
+		  @AttributeOverride(name = "username", column = @Column(nullable = false, unique = true)),
+		  @AttributeOverride(name = "password", column = @Column(nullable = false))
+  })
   private Credentials credentials;
 	
   @Embedded
+  @AttributeOverrides({
+		  @AttributeOverride(name = "firstName", column = @Column(name="`firstName`")),
+		  @AttributeOverride(name = "lastName", column = @Column(name="`lastName`")),
+		  @AttributeOverride(name = "email", column = @Column(nullable = false)),
+		  @AttributeOverride(name = "phone", column = @Column(name = "phone"))
+  })
   private Profile profile;
 	
 	private boolean active;
@@ -36,6 +42,8 @@ public class User {
 	private boolean admin;
 	
 	private String status = "PENDING";
+
+	private boolean deleted = false;
 	
 	@OneToMany(mappedBy = "author")
 	@EqualsAndHashCode.Exclude
