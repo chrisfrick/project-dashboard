@@ -6,7 +6,7 @@ export interface BasicUser {
     email: string;
     phone: string;
   };
-  isAdmin: boolean;
+  admin: boolean;
   active: boolean;
-  status: boolean;
+  status: string;
 }

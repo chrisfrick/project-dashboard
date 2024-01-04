@@ -1,0 +1,119 @@
+<app-navbar></app-navbar>
+
+<div class="reg-page">
+    <div class="reg-title">
+        <p class="title1">
+            User Registry
+        </p>
+        <p class="title2">
+            A general view of all your members in your organization
+        </p>
+    </div>
+
+    <div class="reg-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Team</th>
+                    <th>Active</th>
+                    <th>Admin</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody id="reg-users-display">
+                <tr *ngFor="let rowData of dummyData">
+                    <td>{{ rowData.name }}</td>
+                    <td>{{ rowData.email }}</td>
+                    <td>{{ rowData.team }}</td>
+                    <td>
+                        <span [style.color]="rowData.active ? '#00B11C' : '#FF0000'">
+                            {{ rowData.active ? 'YES' : 'NO' }}
+                        </span>
+                    </td>
+                    <td>
+                        <span [style.color]="rowData.admin ? '#00B11C' : '#FF0000'">
+                            {{ rowData.admin ? 'YES' : 'NO' }}
+                        </span>
+                    </td>
+                    <td>{{ rowData.status }}</td>
+                    <td>
+                        <img src="../../assets/edit-icon.png" class="table-icon" alt="edit" 
+                            (click)="editUser(rowData)">
+                    </td>
+                    <td>
+                        <img src="../../assets/delete-icon.png" class="table-icon" alt="delete"
+                            (click)="deleteUser(rowData)">
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+        <button (click)="openAddUserOverlay()">ADD USER</button>
+    </div>
+</div>
+
+<!-- Overlay -->
+<div *ngIf="overlayVisible" class="overlay-page">
+    <div class="overlay-content">
+        <div class="overlay-content-innards">
+
+            <div class="close-button" (click)="closeAddUserOverlay()">
+                <div class="close-circle">
+                    <div class="close-cross">
+                        <div class="line line1"></div>
+                        <div class="line line2"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="overlay-input">
+                <div class="overlay-input-line">
+                    <input type="text" placeholder="first name" [(ngModel)]="newUser.firstName">
+                    <div class="input-line"></div>
+                </div>
+
+                <div class="overlay-input-line">
+                    <input type="text" placeholder="last name" [(ngModel)]="newUser.lastName">
+                    <div class="input-line"></div>
+                </div>
+            </div>
+
+            <div class="overlay-input">
+                <div class="overlay-input-line">
+                    <input type="text" placeholder="email" [(ngModel)]="newUser.email">
+                    <div class="input-line"></div>
+                </div>
+            </div>
+
+            <div class="overlay-input">
+                <div class="overlay-input-line">
+                    <input type="text" placeholder="password" [(ngModel)]="newUser.password">
+                    <div class="input-line"></div>
+                </div>
+                <div class="overlay-input-line">
+                    <input type="text" placeholder="confirm password" [(ngModel)]="newUser.confirmPassword">
+                    <div class="input-line"></div>
+                </div>
+            </div>
+
+            <div class="overlay-text">
+                <p>Make user an admin role?</p>
+            </div>
+
+            <div class="admin-bool">
+                <select name="make-admin" id="make-admin" [(ngModel)]="newUser.admin" (focus)="onSelectFocus()">
+                    <option *ngIf="!selectedOption" value="" disabled selected>Select an option</option>
+                    <option value="true">True</option>
+                    <option value="false">False</option>
+                </select>
+            </div>
+
+            <div>
+                <button (click)="submitUser()">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
