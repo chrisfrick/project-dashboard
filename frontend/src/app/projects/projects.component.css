@@ -5,3 +5,26 @@ h1 {
   text-align: center;
   color: var(--color-teal);
 }
+
+.new-project-button {
+  width: 103px;
+  height: 32px;
+  line-height: 32px;
+  border-radius: 10.29px;
+  background: var(--color-teal);
+  color: rgba(255, 255, 255, 0.75);
+  text-align: center;
+  align-self: flex-end;
+  margin-bottom: 26px;
+}
+
+.new-project-button:hover {
+  cursor: pointer;
+}
+
+.project-list {
+  max-width: 1000px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+}

@@ -1,2 +1,9 @@
 <app-navbar> </app-navbar>
 <h1>Projects for {{ team?.name }}</h1>
+<div class="project-list">
+  <div class="new-project-button">New</div>
+  <app-project-card
+    *ngFor="let project of projects"
+    [project]="project"
+  ></app-project-card>
+</div>
