@@ -1,4 +1,4 @@
 <div class="container">
   <h2>Select Company</h2>
-	<app-dropdown [options]="companies" button="Save"></app-dropdown>
+	<app-dropdown [options]="companies" (passSelection)="onSubmit($event)"></app-dropdown>
 </div>

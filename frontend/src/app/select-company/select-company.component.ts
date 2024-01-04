@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FullUser } from '../types/full-user';
 
 @Component({
   selector: 'app-select-company',
@@ -7,4 +8,8 @@ import { Component } from '@angular/core';
 })
 export class SelectCompanyComponent {
   companies: string[] = ["FedEx", "Cook Systems", "Google"]
+
+  onSubmit(selection: string) {
+    console.log(selection)
+  }
 }

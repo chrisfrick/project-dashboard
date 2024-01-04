@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-dropdown',
@@ -8,6 +8,7 @@ import { Component, Input } from '@angular/core';
 export class DropdownComponent {
   @Input() options: string[] = [];
   @Input() button: string = '';
+  @Output() passSelection = new EventEmitter<string>()
 
   isMenuOpen: boolean = false;
   selection: string = '';
@@ -26,8 +27,14 @@ export class DropdownComponent {
 
   onClick(selection: string) {
     this.selection = selection;
-    this.toggleMenu();
+    if (!this.isButton()) {
+      this.submit()
+    } else {
+      this.toggleMenu();
+    }
   }
 
-  onSubmit() {}
+  submit() {
+    this.passSelection.emit(this.selection)
+  }
 }
