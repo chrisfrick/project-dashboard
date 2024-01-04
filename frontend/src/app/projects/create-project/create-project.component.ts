@@ -22,12 +22,13 @@ export class CreateProjectComponent {
     this.close.emit();
   }
 
-  //TODO: write onSubmit function
   onSubmit(): void {
-    this.dataService.createProject(
-      this.createProjectForm.controls['name'].value,
-      this.createProjectForm.controls['description'].value
-    );
+    this.dataService
+      .createProject(
+        this.createProjectForm.controls['name'].value,
+        this.createProjectForm.controls['description'].value
+      )
+      .subscribe((response) => {});
     this.close.emit();
   }
 }

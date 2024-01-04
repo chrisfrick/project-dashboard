@@ -37,6 +37,10 @@ export class DataService {
     );
   }
 
+  updateProject(project: Project) {
+    return this.http.patch<Project>(`api/projects/${project.id}`, project);
+  }
+
   getCompanyUsers(companyId: number) {
     return this.http.get<FullUser[]>(`api/company/${companyId}/users`);
   }

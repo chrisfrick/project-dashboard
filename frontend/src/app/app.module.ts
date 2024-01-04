@@ -21,6 +21,7 @@ import { UserRegistryComponent } from './user-registry/user-registry.component';
 import { ProjectsComponent } from './projects/projects.component';
 import { ProjectCardComponent } from './projects/project-card/project-card.component';
 import { CreateProjectComponent } from './projects/create-project/create-project.component';
+import { EditProjectComponent } from './projects/edit-project/edit-project.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { CreateProjectComponent } from './projects/create-project/create-project
     ProjectsComponent,
     ProjectCardComponent,
     CreateProjectComponent,
+    EditProjectComponent,
   ],
   imports: [
     BrowserModule,

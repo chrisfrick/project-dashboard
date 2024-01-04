@@ -5,6 +5,10 @@
   border-radius: 20px;
 }
 
+.team-card:hover {
+  cursor: pointer;
+}
+
 .card-header {
   display: flex;
   align-items: center;
