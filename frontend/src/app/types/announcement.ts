@@ -1,4 +1,4 @@
-import { BasicUser } from "./basic-user";
+import { BasicUser, defaultBasicUser } from "./basic-user";
 
 export default interface Announcement {
 	id?: number;
@@ -6,4 +6,14 @@ export default interface Announcement {
 	title: string;
 	message: string;
 	author: BasicUser;
+}
+
+export function defaultAnnouncement(): Announcement {
+	return {
+		id: -1,
+		date: new Date(),
+		title: '',
+		message: '',
+		author: defaultBasicUser()
+	}
 }

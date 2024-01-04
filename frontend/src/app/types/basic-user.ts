@@ -10,3 +10,18 @@ export interface BasicUser {
   active: boolean;
   status: string;
 }
+
+export function defaultBasicUser(): BasicUser {
+  return {
+    id: -1,
+    profile: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      phone: '',
+    },
+    admin: false,
+    active: false,
+    status: ''
+  }
+}
