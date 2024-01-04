@@ -15,7 +15,7 @@ export class DataService {
   currentCompanyId: number | undefined = undefined;
 
   // TODO: REMOVE HARDCODED USER
-  private currentUserSource = new BehaviorSubject<FullUser | null>(LoganRoy);
+  private currentUserSource = new BehaviorSubject<FullUser | null>(null);
   currentUser = this.currentUserSource.asObservable();
 
   private teamToViewSource = new BehaviorSubject<Team | null>(null);
@@ -23,6 +23,9 @@ export class DataService {
 
   private teamsSource = new BehaviorSubject<Team[]>([]);
   teams = this.teamsSource.asObservable();
+
+  private projectsToViewSource = new BehaviorSubject<Project[]>([]);
+  projectsToView = this.projectsToViewSource.asObservable();
 
   constructor(private http: HttpClient) {}
 
@@ -44,6 +47,21 @@ export class DataService {
     this.teamsSource.next([...this.teamsSource.getValue(), newTeam]);
   }
 
+  createTeam(team: Team) {
+    return this.http.post<Team>(
+      `api/company/${this.currentCompanyId}/teams`,
+      team
+    );
+  }
+
+  loadProjects(teamId: number) {
+    this.http
+      .get<Project[]>(
+        `api/company/${this.currentCompanyId}/teams/${teamId}/projects`
+      )
+      .subscribe((response) => this.projectsToViewSource.next(response));
+  }
+
   getProjects(teamId: number) {
     return this.http.get<Project[]>(
       `api/company/${this.currentCompanyId}/teams/${teamId}/projects`
@@ -60,13 +78,6 @@ export class DataService {
     );
   }
 
-  createTeam(team: Team) {
-    return this.http.post<Team>(
-      `api/company/${this.currentCompanyId}/teams`,
-      team
-    );
-  }
-
   setTeamToView(team: Team): void {
     this.teamToViewSource.next(team);
   }
@@ -79,10 +90,19 @@ export class DataService {
       active: true,
       team: team as Team,
     };
-    return this.http.post<Project>(
-      `api/company/${this.currentCompanyId}/teams/${team?.id}/projects`,
-      projectToCreate
-    );
+    this.http
+      .post<Project>(
+        `api/company/${this.currentCompanyId}/teams/${team?.id}/projects/${
+          this.currentUserSource.getValue()!.id
+        }`,
+        projectToCreate
+      )
+      .subscribe((response) => {
+        this.projectsToViewSource.next([
+          ...this.projectsToViewSource.getValue(),
+          response,
+        ]);
+      });
   }
 
   setCurrentUser(user: FullUser | null) {

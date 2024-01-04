@@ -28,10 +28,12 @@ export class ProjectsComponent {
     this.dataService.teamToView.subscribe((team) => (this.team = team));
     if (!this.team || !this.team.id) {
       this.router.navigateByUrl('/teams');
+      return;
     } else {
-      this.dataService
-        .getProjects(this.team.id!)
-        .subscribe((projects) => (this.projects = projects));
+      this.dataService.loadProjects(this.team.id!);
+      this.dataService.projectsToView.subscribe(
+        (projects) => (this.projects = projects)
+      );
     }
   }
 
