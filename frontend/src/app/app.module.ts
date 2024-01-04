@@ -18,6 +18,7 @@ import { NameCardComponent } from './teams/name-card/name-card.component';
 import { DropdownComponent } from './dropdown/dropdown.component';
 import { LoginComponent } from './login/login.component';
 import { UserRegistryComponent } from './user-registry/user-registry.component';
+import { AnnouncementComponent } from './announcements/announcement/announcement.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,7 @@ import { UserRegistryComponent } from './user-registry/user-registry.component';
     NameCardComponent,
     DropdownComponent,
     LoginComponent, 
-    UserRegistryComponent,
+    UserRegistryComponent, AnnouncementComponent,
   ],
   imports: [
     BrowserModule,
