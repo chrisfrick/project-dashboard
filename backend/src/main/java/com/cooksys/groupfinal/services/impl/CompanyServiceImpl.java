@@ -8,6 +8,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import com.cooksys.groupfinal.exceptions.BadRequestException;
+import com.cooksys.groupfinal.exceptions.NotAuthorizedException;
+import com.cooksys.groupfinal.repositories.ProjectRepository;
+import com.cooksys.groupfinal.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
 import com.cooksys.groupfinal.dtos.AnnouncementDto;
@@ -40,6 +44,8 @@ public class CompanyServiceImpl implements CompanyService {
 	private final AnnouncementMapper announcementMapper;
 	private final TeamMapper teamMapper;
 	private final ProjectMapper projectMapper;
+	private final ProjectRepository projectRepository;
+	private final UserRepository userRepository;
 	
 	private Company findCompany(Long id) {
         Optional<Company> company = companyRepository.findById(id);
@@ -56,6 +62,13 @@ public class CompanyServiceImpl implements CompanyService {
         }
         return team.get();
     }
+	private User findUser(Long userId) {
+		Optional<User> user = userRepository.findById(userId);
+		if ( user.isEmpty()) {
+			throw new NotFoundException( "User with the provided id does not exist");
+		}
+		return user.get();
+	}
 	
 	@Override
 	public Set<FullUserDto> getAllUsers(Long id) {
@@ -92,6 +105,42 @@ public class CompanyServiceImpl implements CompanyService {
 		team.getProjects().forEach(filteredProjects::add);
 		filteredProjects.removeIf(project -> !project.isActive());
 		return projectMapper.entitiesToDtos(filteredProjects);
+	}
+
+	@Override
+	public ProjectDto addProject(Long companyId, Long teamId, Long userId, ProjectDto projectDto) {
+		// null validation
+		if(companyId == null || teamId == null || projectDto == null) {
+			throw new BadRequestException("Company id and team id and ProjectDto is required");
+		}
+
+		// fetching user,comapnay, team by id
+		User user = findUser(userId);
+		Company  company = findCompany(companyId);
+		Team team = findTeam(teamId);
+
+		//validating team with the company
+		if(!company.getTeams().contains(team)) {
+			throw new NotFoundException("Team with id "+ teamId + " does not exist at company with id "+ companyId + ".");
+		}
+		// validating admin rights
+		if(!user.isAdmin()) {
+			throw new NotAuthorizedException("User does not have admin rights");
+		}
+		//  generates id and persist project with Project repository
+		projectDto.setActive(true);
+		projectDto.setTeam(teamMapper.entityToDto(team));
+		Project project = projectRepository.save(projectMapper.dtoToEntity(projectDto));
+
+		// persisting with team repository
+		team.getProjects().add(project);
+		teamRepository.save(team);
+
+		// persisting with company repository
+		company.getTeams().add(team);
+		companyRepository.save(company);
+
+		return projectMapper.entityToDto(project);
 	}
 
 }
