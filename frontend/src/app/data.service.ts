@@ -30,6 +30,13 @@ export class DataService {
     )
   }
 
+  createAnnouncement(announcement: Announcement) {
+    return this.http.post<Announcement>(
+      `api/company/${this.currentCompanyId}/announcements`,
+      announcement
+    )
+  }
+
   getTeams() {
     return this.currentUserSource.getValue()!.admin
       ? this.http.get<Team[]>(`api/company/${this.currentCompanyId}/teams`)
