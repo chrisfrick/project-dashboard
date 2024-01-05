@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 import { DataService } from 'src/app/data.service';
 import Announcement from 'src/app/types/announcement';
 import { BasicUser, defaultBasicUser } from 'src/app/types/basic-user';
@@ -11,6 +12,7 @@ import { BasicUser, defaultBasicUser } from 'src/app/types/basic-user';
 })
 export class CreateAnnouncementComponent implements OnInit {
   @Output() closeCreate = new EventEmitter<void>();
+  @Output() loadAnnouncements = new EventEmitter<void>();
 
   currentBasicUser: BasicUser = defaultBasicUser();
   currentUserFullName: string = '';
@@ -19,7 +21,7 @@ export class CreateAnnouncementComponent implements OnInit {
     message: new FormControl<string>(''),
   });
 
-  constructor(private dataService: DataService) {}
+  constructor(private dataService: DataService, private router: Router) {}
 
   ngOnInit(): void {
     this.dataService.currentUser.subscribe((currentUser) => {
@@ -42,13 +44,17 @@ export class CreateAnnouncementComponent implements OnInit {
   }
 
   onSubmit() {
-    let newAnn: Announcement = {
+    let newAnnouncement: Announcement = {
       date: new Date(),
       title: this.createForm.controls['title'].value,
       message: this.createForm.controls['message'].value,
       author: this.currentBasicUser,
     };
-    this.dataService.createAnnouncement(newAnn).subscribe((response) => { window.location.reload(); });
-    this.passCloseCreate();
+    this.dataService
+      .createAnnouncement(newAnnouncement)
+      .subscribe(() => {
+        this.loadAnnouncements.emit();
+        this.closeCreate.emit();
+      });
   }
 }

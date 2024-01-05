@@ -16,10 +16,7 @@ export class AnnouncementsComponent {
   constructor(private dataService: DataService, private router: Router) {}
 
   ngOnInit(): void {
-    this.dataService.getAnnouncements().subscribe((announcements) => {
-      this.announcements = announcements.map(
-        (announcement) => ({...announcement, date: new Date(announcement.date)}));
-    });
+    this.loadAnnouncements();
 
     // Check for logged in currentUser
     this.dataService.currentUser.subscribe((user) => {
@@ -38,5 +35,16 @@ export class AnnouncementsComponent {
 
   closeCreate() {
     this.isCreateShown = false;
+  }
+
+  loadAnnouncements() {
+    this.dataService.getAnnouncements().subscribe((announcements) => {
+      this.announcements = announcements
+        .map((announcement) => ({
+          ...announcement,
+          date: new Date(announcement.date),
+        }))
+        .sort((a, b) => b.date.getTime() - a.date.getTime());
+    });
   }
 }
