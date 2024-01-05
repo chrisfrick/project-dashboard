@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { DataService } from 'src/app/data.service';
-import { Project } from 'src/app/types/project';
 
 @Component({
   selector: 'app-create-project',
