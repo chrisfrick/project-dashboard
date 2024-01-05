@@ -12,8 +12,7 @@ export class LoginComponent {
   password = '';
   showLoginError = false;
 
-  constructor(private router: Router, private dataService: DataService) { }
-
+  constructor(private router: Router, private dataService: DataService) {}
 
   // admin
   //   user: thisismycompany
@@ -24,11 +23,11 @@ export class LoginComponent {
   checkLogin(): void {
     this.dataService.login(this.username, this.password).subscribe(
       (user) => {
-        console.log('got response', user);
-        this.dataService.setCurrentUser(user)
+        this.dataService.setCurrentUser(user);
         if (user.admin) {
           this.router.navigateByUrl('/select-company');
         } else {
+          this.dataService.updateCompanyId(user.companies[0].id);
           this.router.navigateByUrl('/announcements');
         }
       },
