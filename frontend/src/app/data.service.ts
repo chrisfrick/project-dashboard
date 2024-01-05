@@ -33,14 +33,14 @@ export class DataService {
   getAnnouncements() {
     return this.http.get<Announcement[]>(
       `api/company/${this.currentCompanyId}/announcements`
-    )
+    );
   }
 
   createAnnouncement(announcement: Announcement) {
     return this.http.post<Announcement>(
       `api/company/${this.currentCompanyId}/announcements`,
       announcement
-    )
+    );
   }
 
   loadTeams() {
