@@ -22,10 +22,9 @@ export class TeamsComponent {
         this.router.navigateByUrl('/login');
         return;
       }
-      this.dataService.getTeams().subscribe((teams) => (this.teams = teams));
-      this.dataService.currentUser.subscribe(
-        (user) => (this.userIsAdmin = user!.admin)
-      );
+      this.userIsAdmin = user.admin;
+      this.dataService.loadTeams();
+      this.dataService.teams.subscribe((teams) => (this.teams = teams));
     });
   }
 

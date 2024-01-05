@@ -23,12 +23,10 @@ export class CreateProjectComponent {
   }
 
   onSubmit(): void {
-    this.dataService
-      .createProject(
-        this.createProjectForm.controls['name'].value,
-        this.createProjectForm.controls['description'].value
-      )
-      .subscribe((response) => {});
+    this.dataService.createProject(
+      this.createProjectForm.controls['name'].value,
+      this.createProjectForm.controls['description'].value
+    );
     this.close.emit();
   }
 }

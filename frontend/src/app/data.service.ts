@@ -15,20 +15,51 @@ export class DataService {
   currentCompanyId: number | undefined = undefined;
 
   // TODO: REMOVE HARDCODED USER
-  private currentUserSource = new BehaviorSubject<FullUser | null>(LoganRoy);
+  private currentUserSource = new BehaviorSubject<FullUser | null>(null);
   currentUser = this.currentUserSource.asObservable();
 
   private teamToViewSource = new BehaviorSubject<Team | null>(null);
   teamToView = this.teamToViewSource.asObservable();
 
-  constructor(private http: HttpClient) { }
+  private teamsSource = new BehaviorSubject<Team[]>([]);
+  teams = this.teamsSource.asObservable();
 
-  getTeams() {
-    return this.currentUserSource.getValue()!.admin
-      ? this.http.get<Team[]>(`api/company/${this.currentCompanyId}/teams`)
-      : this.http.get<Team[]>(
-        `api/team/userTeams/${this.currentUserSource.getValue()!.id}`
-      );
+  private projectsToViewSource = new BehaviorSubject<Project[]>([]);
+  projectsToView = this.projectsToViewSource.asObservable();
+
+  constructor(private http: HttpClient) {}
+
+  loadTeams() {
+    if (this.currentUserSource.getValue()!.admin) {
+      this.http
+        .get<Team[]>(`api/company/${this.currentCompanyId}/teams`)
+        .subscribe((teams) => this.teamsSource.next(teams));
+    } else {
+      this.http
+        .get<Team[]>(
+          `api/team/userTeams/${this.currentUserSource.getValue()!.id}`
+        )
+        .subscribe((teams) => this.teamsSource.next(teams));
+    }
+  }
+
+  addTeam(newTeam: Team) {
+    this.teamsSource.next([...this.teamsSource.getValue(), newTeam]);
+  }
+
+  createTeam(team: Team) {
+    return this.http.post<Team>(
+      `api/company/${this.currentCompanyId}/teams`,
+      team
+    );
+  }
+
+  loadProjects(teamId: number) {
+    this.http
+      .get<Project[]>(
+        `api/company/${this.currentCompanyId}/teams/${teamId}/projects`
+      )
+      .subscribe((response) => this.projectsToViewSource.next(response));
   }
 
   getProjects(teamId: number) {
@@ -37,20 +68,9 @@ export class DataService {
     );
   }
 
-  updateProject(project: Project) {
-    return this.http.patch<Project>(`api/projects/${project.id}`, project);
-  }
-
   getCompanyUsers() {
     return this.http.get<FullUser[]>(
       `api/company/${this.currentCompanyId}/users`
-    );
-  }
-
-  createTeam(team: Team) {
-    return this.http.post<Team>(
-      `api/company/${this.currentCompanyId}/team`,
-      team
     );
   }
 
@@ -66,10 +86,33 @@ export class DataService {
       active: true,
       team: team as Team,
     };
-    return this.http.post<Project>(
-      `api/company/${this.currentCompanyId}/teams/${team?.id}/projects`,
-      projectToCreate
-    );
+    this.http
+      .post<Project>(
+        `api/company/${this.currentCompanyId}/teams/${team?.id}/projects/${
+          this.currentUserSource.getValue()!.id
+        }`,
+        projectToCreate
+      )
+      .subscribe((response) => {
+        this.projectsToViewSource.next([
+          ...this.projectsToViewSource.getValue(),
+          response,
+        ]);
+      });
+  }
+
+  updateProject(project: Project) {
+    this.http
+      .patch<Project>(`api/projects/${project.id}`, project)
+      .subscribe((updatedProject) => {
+        this.projectsToViewSource.next(
+          this.projectsToViewSource
+            .getValue()
+            .map((project) =>
+              project.id !== updatedProject.id ? project : updatedProject
+            )
+        );
+      });
   }
 
   setCurrentUser(user: FullUser | null) {
@@ -83,48 +126,60 @@ export class DataService {
   login(username: string, password: string) {
     let loginData = {
       username,
-      password
+      password,
     };
     return this.http.post<FullUser>(`api/users/login`, loginData);
   }
 
-  createUser(firstName: string, lastName: string, email: string, password: string, admin: boolean) {
+  createUser(
+    firstName: string,
+    lastName: string,
+    email: string,
+    password: string,
+    admin: boolean
+  ) {
     let newUser = {
-      "credentials": {
-        "username": email,
-        "password": password
+      credentials: {
+        username: email,
+        password: password,
       },
-      "profile": {
-        "firstName": firstName,
-        "lastName": lastName,
-        "email": email,
-        "phone": ""
+      profile: {
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        phone: '',
       },
-      "admin": admin
-    }
+      admin: admin,
+    };
     return this.http.post<FullUser>(`api/users`, newUser);
   }
 
-  editUser(userId: number, firstName: string, lastName: string, email: string, phoneNumber: string, admin: boolean) {
+  editUser(
+    userId: number,
+    firstName: string,
+    lastName: string,
+    email: string,
+    phoneNumber: string,
+    admin: boolean
+  ) {
     console.log('got here editting user', userId);
     let edittedUser = {
-      "credentials": {
-        "username": 'username',
-        "password": 'password'
+      credentials: {
+        username: 'username',
+        password: 'password',
       },
-      "profile": {
-        "firstName": firstName,
-        "lastName": lastName,
-        "email": email,
-        "phone": phoneNumber
+      profile: {
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        phone: phoneNumber,
       },
-      "admin": admin
-    }
+      admin: admin,
+    };
     return this.http.patch<FullUser>(`api/users/${userId}`, edittedUser);
   }
 
   deleteUser(userId: number) {
     return this.http.delete(`api/users/users/delete/${userId}`);
   }
-
 }
