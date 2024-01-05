@@ -4,6 +4,7 @@ import com.cooksys.groupfinal.dtos.AnnouncementDto;
 import com.cooksys.groupfinal.dtos.FullUserDto;
 import com.cooksys.groupfinal.dtos.ProjectDto;
 import com.cooksys.groupfinal.dtos.TeamDto;
+import com.cooksys.groupfinal.dtos.UserRequestDto;
 import com.cooksys.groupfinal.services.AnnouncementService;
 import com.cooksys.groupfinal.services.CompanyService;
 import com.cooksys.groupfinal.services.UserService;
@@ -25,11 +26,11 @@ public class CompanyController {
     public Set<FullUserDto> getAllUsers(@PathVariable Long id) {
         return companyService.getAllUsers(id);
     }
-//
-//	@PostMapping("/{id}/users")
-//    public FullUserDto createUser(@PathVariable Long id, @RequestBody UserRequestDto userRequestDto) {
-//        return userService.createUser(id, userRequestDto.getCredentials(), userRequestDto.getProfile(), userRequestDto.isAdmin());
-//    }
+
+	@PostMapping("/{id}/users")
+    public FullUserDto createUser(@PathVariable Long id, @RequestBody UserRequestDto userRequestDto) {
+        return userService.createUser(id, userRequestDto.getCredentials(), userRequestDto.getProfile(), userRequestDto.isAdmin());
+    }
 	
 	@GetMapping("/{id}/announcements")
     public Set<AnnouncementDto> getAllAnnouncements(@PathVariable Long id) {
