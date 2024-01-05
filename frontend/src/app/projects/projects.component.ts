@@ -22,9 +22,13 @@ export class ProjectsComponent {
   constructor(private dataService: DataService, private router: Router) {}
 
   ngOnInit(): void {
-    this.dataService.currentUser.subscribe(
-      (user) => (this.userIsAdmin = user!.admin)
-    );
+    this.dataService.currentUser.subscribe((user) => {
+      if (!user) {
+        this.router.navigateByUrl('/login');
+        return;
+      }
+      this.userIsAdmin = user!.admin;
+    });
     this.dataService.teamToView.subscribe((team) => (this.team = team));
     if (!this.team || !this.team.id) {
       this.router.navigateByUrl('/teams');
