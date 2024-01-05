@@ -1,6 +1,5 @@
 package com.cooksys.groupfinal.services.impl;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -9,7 +8,6 @@ import java.util.stream.Collectors;
 import com.cooksys.groupfinal.dtos.*;
 import com.cooksys.groupfinal.embeddables.Profile;
 import com.cooksys.groupfinal.entities.Team;
-import com.cooksys.groupfinal.mappers.CompanyMapper;
 import com.cooksys.groupfinal.mappers.ProfileMapper;
 import org.springframework.stereotype.Service;
 
@@ -33,8 +31,6 @@ public class UserServiceImpl implements UserService {
     private final FullUserMapper fullUserMapper;
 	private final CredentialsMapper credentialsMapper;
     private final ProfileMapper profileMapper;
-
-    private final CompanyMapper companyMapper;
 
 	private User findUser(String username) {
         Optional<User> user = userRepository.findByCredentialsUsernameAndActiveTrue(username);
@@ -127,7 +123,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-        public FullUserDto createUser(CredentialsDto credentials, ProfileDto profile, boolean admin, CompanyDto company) {
+        public FullUserDto createUser(CredentialsDto credentials, ProfileDto profile, boolean admin) {
 
         if (credentials == null || profile == null) {
             throw new BadRequestException("Credentials and Profile are required.");
@@ -145,7 +141,6 @@ public class UserServiceImpl implements UserService {
             User newUser = new User();
             newUser.setCredentials(credentialsMapper.dtoToEntity(credentials));
             newUser.setProfile(profileMapper.dtoToEntity(profile));
-            newUser.setCompanies(Collections.singleton(companyMapper.dtoToEntity(company)));
             newUser.setAdmin(admin);
             User savedUser = userRepository.saveAndFlush(newUser);
             return fullUserMapper.entityToFullUserDto(savedUser);
