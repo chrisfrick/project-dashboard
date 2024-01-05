@@ -11,8 +11,8 @@
         (loadAnnouncements)="loadAnnouncements()"
       ></app-create-announcement>
     </div>
-    <hr />
   </div>
+  <hr />
   <div class="content" *ngFor="let announcement of announcements">
     <app-announcement [announcement]="announcement"></app-announcement>
   </div>
