@@ -14,4 +14,5 @@ public interface CompanyMapper {
 
   Set<CompanyDto> entitiesToDtos(Set<Company> companies);
 
+    Company dtoToEntity(CompanyDto company);
 }

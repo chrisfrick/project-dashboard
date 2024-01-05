@@ -1,9 +1,6 @@
 package com.cooksys.groupfinal.services;
 
-import com.cooksys.groupfinal.dtos.CredentialsDto;
-import com.cooksys.groupfinal.dtos.FullUserDto;
-import com.cooksys.groupfinal.dtos.ProfileDto;
-import com.cooksys.groupfinal.dtos.UserRequestDto;
+import com.cooksys.groupfinal.dtos.*;
 
 import java.util.List;
 
@@ -17,7 +14,7 @@ public interface UserService {
 
     List<FullUserDto> getAllUsers();
 
-    FullUserDto createUser(CredentialsDto credentials, ProfileDto profile, boolean admin);
+    FullUserDto createUser(CredentialsDto credentials, ProfileDto profile, boolean admin, CompanyDto company);
 
     void deleteUser(Long userIdToDelete);
 }
