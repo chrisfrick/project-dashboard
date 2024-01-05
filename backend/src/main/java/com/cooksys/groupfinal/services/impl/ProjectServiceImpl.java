@@ -50,7 +50,7 @@ public class ProjectServiceImpl implements ProjectService {
     public ProjectDto updateProjectDescription(Long projectId, ProjectDto projectDto) {
         // validation for null
         if(projectDto == null || projectId == null) {
-            throw new BadRequestException("A team id, project id and projectDto are required.");
+            throw new BadRequestException("Project id and projectDto are required.");
         }
         // fetch project by id
         Project  project = findProject(projectDto.getId());
@@ -100,7 +100,7 @@ public class ProjectServiceImpl implements ProjectService {
     public ProjectDto updateProject(Long projectId, ProjectDto projectDto) {
         // validation for null
         if(projectDto == null || projectId == null) {
-            throw new BadRequestException("A team id, project id and projectDto are required.");
+            throw new BadRequestException("Project id and projectDto are required.");
         }
         // fetch project by id
         Project  project = findProject(projectDto.getId());
