@@ -32,7 +32,7 @@ interface deleteUser {
   styleUrls: ['./user-registry.component.css'],
 })
 export class UserRegistryComponent implements OnInit {
-  makeAdminBools: string[] = ['true', 'false']
+  makeAdminBools: string[] = ['true', 'false'];
   userData: FullUser[] = [];
   firstNameExist: boolean = true;
   lastNameExist: boolean = true;
@@ -61,33 +61,33 @@ export class UserRegistryComponent implements OnInit {
     email: '',
     phoneNumber: '',
     admin: false,
-    userId: -1
+    userId: -1,
   };
 
   // deleting user
   deleteUser: deleteUser = {
     userToDelete: '',
-    userId: -1
+    userId: -1,
   };
 
-  constructor(private router: Router, private dataService: DataService) { }
+  constructor(private router: Router, private dataService: DataService) {}
 
   ngOnInit() {
     // CHANGE THIS TO THE USER COMPANY
-    this.dataService.getCompanyUsers().subscribe((userData) => {
-      this.userData = userData;
-      console.log('THIS IS TEH DATA');
-      console.log(this.userData);
-      this.dataService.currentUser.subscribe((user) => {
-        // Check for logged-in user
-        if (!user) {
-          this.router.navigateByUrl('/login');
-          return;
-        }
-        // Disallow non-admin access
-        if (!user.admin) {
-          this.router.navigateByUrl('/announcements');
-        }
+    this.dataService.currentUser.subscribe((user) => {
+      // Check for logged-in user
+      if (!user) {
+        this.router.navigateByUrl('/login');
+        return;
+      }
+      // Disallow non-admin access
+      if (!user.admin) {
+        this.router.navigateByUrl('/announcements');
+      }
+      this.dataService.getCompanyUsers().subscribe((userData) => {
+        this.userData = userData;
+        console.log('THIS IS TEH DATA');
+        console.log(this.userData);
       });
     });
   }
@@ -118,14 +118,21 @@ export class UserRegistryComponent implements OnInit {
     } else if (this.newUser.admin === undefined) {
       this.adminExist = false;
     } else {
-      this.dataService.createUser(this.newUser.firstName, this.newUser.lastName,
-        this.newUser.email, this.newUser.password, this.newUser.admin).subscribe(
+      this.dataService
+        .createUser(
+          this.newUser.firstName,
+          this.newUser.lastName,
+          this.newUser.email,
+          this.newUser.password,
+          this.newUser.admin
+        )
+        .subscribe(
           (user) => {
             this.userData.push(user);
             this.closeAddUserOverlay();
           },
           (error) => {
-            console.log('CREATE USER FAILED!!!')
+            console.log('CREATE USER FAILED!!!');
           }
         );
     }
@@ -148,25 +155,34 @@ export class UserRegistryComponent implements OnInit {
 
   // edits user
   editUserApply() {
-    this.dataService.editUser(this.editUser.userId ?? 0, this.editUser.firstName, this.editUser.lastName,
-      this.editUser.email, this.editUser.phoneNumber, this.editUser.admin).subscribe(
+    this.dataService
+      .editUser(
+        this.editUser.userId ?? 0,
+        this.editUser.firstName,
+        this.editUser.lastName,
+        this.editUser.email,
+        this.editUser.phoneNumber,
+        this.editUser.admin
+      )
+      .subscribe(
         (user) => {
           console.log('NEW USER DATA ', user);
-          const index = this.userData.findIndex(u => u.id === user.id);
+          const index = this.userData.findIndex((u) => u.id === user.id);
           if (index !== -1) {
             this.userData[index] = user;
           }
           this.closeEditUserOverlay();
         },
         (error) => {
-          console.log('DID NOT EDIT USER')
+          console.log('DID NOT EDIT USER');
         }
       );
   }
 
   // deleteUser overlay visibility
   openDeleteUserOverlay(user: FullUser) {
-    this.deleteUser.userToDelete = user.profile.firstName + ' ' + user.profile.lastName;
+    this.deleteUser.userToDelete =
+      user.profile.firstName + ' ' + user.profile.lastName;
     this.deleteUser.userId = user.id;
 
     this.deleteOverlayVisible = true;
@@ -176,19 +192,21 @@ export class UserRegistryComponent implements OnInit {
     this.deleteOverlayVisible = false;
   }
 
-  // deletes user 
+  // deletes user
   deleteUserApply(): void {
     this.dataService.deleteUser(this.deleteUser.userId ?? 0).subscribe(
       () => {
-        console.log('USER DELETED')
-        const index = this.userData.findIndex(u => u.id === this.deleteUser.userId);
+        console.log('USER DELETED');
+        const index = this.userData.findIndex(
+          (u) => u.id === this.deleteUser.userId
+        );
         if (index !== -1) {
           this.userData.splice(index, 1);
         }
         this.closeDeleteUserOverlay();
       },
       (error) => {
-        console.log('DID NOT DELETE USER')
+        console.log('DID NOT DELETE USER');
       }
     );
   }
@@ -216,6 +234,4 @@ export class UserRegistryComponent implements OnInit {
     this.newUser.confirmPassword = '';
     this.newUser.admin = undefined;
   }
-
-
 }
