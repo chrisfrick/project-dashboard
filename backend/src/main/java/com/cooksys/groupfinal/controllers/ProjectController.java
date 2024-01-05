@@ -49,11 +49,11 @@ public class ProjectController {
 	}
 
 	//*********
-	//PATCH {projectId}
+	//PUT {projectId}
 	//request {projectDto}
 	//response{ProjectDto}
 	//to modify project details of specific project
-	@PatchMapping("{projectId}/admin")
+	@PutMapping("{projectId}")
 	public ProjectDto updateProject(@PathVariable ("projectId") Long projectId, @RequestBody ProjectDto projectDto) {
 		return projectService.updateProject(projectId, projectDto);
 	}
