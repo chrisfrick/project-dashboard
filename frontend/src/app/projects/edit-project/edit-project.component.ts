@@ -55,7 +55,7 @@ export class EditProjectComponent {
       description: this.editProjectForm.controls['description'].value,
       active: this.editProjectForm.controls['active'].value,
     };
-    this.dataService.updateProject(updatedProject).subscribe((response) => {});
+    this.dataService.updateProject(updatedProject);
     this.close.emit();
   }
 }

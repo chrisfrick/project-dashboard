@@ -68,10 +68,6 @@ export class DataService {
     );
   }
 
-  updateProject(project: Project) {
-    return this.http.patch<Project>(`api/projects/${project.id}`, project);
-  }
-
   getCompanyUsers() {
     return this.http.get<FullUser[]>(
       `api/company/${this.currentCompanyId}/users`
@@ -102,6 +98,20 @@ export class DataService {
           ...this.projectsToViewSource.getValue(),
           response,
         ]);
+      });
+  }
+
+  updateProject(project: Project) {
+    this.http
+      .patch<Project>(`api/projects/${project.id}`, project)
+      .subscribe((updatedProject) => {
+        this.projectsToViewSource.next(
+          this.projectsToViewSource
+            .getValue()
+            .map((project) =>
+              project.id !== updatedProject.id ? project : updatedProject
+            )
+        );
       });
   }
 

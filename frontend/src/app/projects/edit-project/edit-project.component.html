@@ -20,7 +20,7 @@
       type="text"
     />
 
-    <h2>Active?</h2>
+    <h2 *ngIf="userIsAdmin">Active?</h2>
     <select *ngIf="userIsAdmin" id="active" formControlName="active">
       <option value="true">Yes</option>
       <option value="false">No</option>
