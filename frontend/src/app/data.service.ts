@@ -117,7 +117,7 @@ export class DataService {
 
   updateProject(project: Project) {
     this.http
-      .patch<Project>(`api/projects/${project.id}/admin`, project)
+      .put<Project>(`api/projects/${project.id}`, project)
       .subscribe((updatedProject) => {
         this.projectsToViewSource.next(
           this.projectsToViewSource
