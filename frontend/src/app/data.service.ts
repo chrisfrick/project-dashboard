@@ -165,7 +165,7 @@ export class DataService {
       },
       admin: admin,
     };
-    return this.http.post<FullUser>(`api/users`, newUser);
+    return this.http.post<FullUser>(`api/company/${this.currentCompanyId}/users`, newUser);
   }
 
   editUser(
