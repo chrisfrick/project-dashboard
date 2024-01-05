@@ -103,7 +103,7 @@ export class DataService {
 
   updateProject(project: Project) {
     this.http
-      .patch<Project>(`api/projects/${project.id}`, project)
+      .patch<Project>(`api/projects/${project.id}/admin`, project)
       .subscribe((updatedProject) => {
         this.projectsToViewSource.next(
           this.projectsToViewSource
