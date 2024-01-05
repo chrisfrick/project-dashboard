@@ -6,6 +6,7 @@ import { Project } from './types/project';
 import { FullUser } from './types/full-user';
 import { BehaviorSubject } from 'rxjs';
 import { LoganRoy } from 'src/data';
+import Announcement from './types/announcement';
 
 @Injectable({
   providedIn: 'root',
@@ -28,6 +29,19 @@ export class DataService {
   projectsToView = this.projectsToViewSource.asObservable();
 
   constructor(private http: HttpClient) {}
+
+  getAnnouncements() {
+    return this.http.get<Announcement[]>(
+      `api/company/${this.currentCompanyId}/announcements`
+    )
+  }
+
+  createAnnouncement(announcement: Announcement) {
+    return this.http.post<Announcement>(
+      `api/company/${this.currentCompanyId}/announcements`,
+      announcement
+    )
+  }
 
   loadTeams() {
     if (this.currentUserSource.getValue()!.admin) {
