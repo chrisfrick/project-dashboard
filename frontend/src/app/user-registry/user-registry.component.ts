@@ -3,15 +3,6 @@ import { DataService } from '../data.service';
 import { Router } from '@angular/router';
 import { FullUser } from '../types/full-user';
 
-interface FullUserData {
-  name: string;
-  email: string;
-  team: string;
-  active: boolean;
-  admin: boolean;
-  status: string;
-}
-
 interface NewUser {
   firstName: string;
   lastName: string;
@@ -19,6 +10,20 @@ interface NewUser {
   password: string;
   confirmPassword: string;
   admin?: boolean | undefined;
+}
+
+interface EditUser {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
+  admin: boolean;
+  userId?: number | undefined;
+}
+
+interface deleteUser {
+  userToDelete: string;
+  userId?: number | undefined;
 }
 
 @Component({
@@ -35,6 +40,9 @@ export class UserRegistryComponent implements OnInit {
   passwordsMatch: boolean = true;
   passwordExist: boolean = true;
   adminExist: boolean = true;
+  addOverlayVisible: boolean = false;
+  editOverlayVisible: boolean = false;
+  deleteOverlayVisible: boolean = false;
 
   // create a new user
   newUser: NewUser = {
@@ -44,6 +52,22 @@ export class UserRegistryComponent implements OnInit {
     password: '',
     confirmPassword: '',
     admin: undefined,
+  };
+
+  // editting user
+  editUser: EditUser = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    phoneNumber: '',
+    admin: false,
+    userId: -1
+  };
+
+  // deleting user
+  deleteUser: deleteUser = {
+    userToDelete: '',
+    userId: -1
   };
 
   constructor(private router: Router, private dataService: DataService) { }
@@ -69,7 +93,6 @@ export class UserRegistryComponent implements OnInit {
   }
 
   // addUser overlay visibility
-  addOverlayVisible: boolean = false;
   openAddUserOverlay() {
     this.addOverlayVisible = true;
     console.log(this.userData);
@@ -78,23 +101,6 @@ export class UserRegistryComponent implements OnInit {
     this.resetNewUser();
     this.addOverlayVisible = false;
   }
-
-  // addUser overlay visibility
-  editOverlayVisible: boolean = false;
-  openEditUserOverlay(user: FullUser) {
-    console.log(user);
-    this.editOverlayVisible = true;
-  }
-  closeEditUserOverlay(): void {
-    this.editOverlayVisible = false;
-  }
-
-  // dropdown text dissapears
-  selectedOption: boolean | null = null;
-  onSelectFocus() {
-    this.selectedOption = true;
-  }
-
 
   // add user to database/update table
   submitUser(): void {
@@ -125,6 +131,74 @@ export class UserRegistryComponent implements OnInit {
     }
   }
 
+  // editUser overlay visibility
+  openEditUserOverlay(user: FullUser) {
+    this.editUser.firstName = user.profile.firstName;
+    this.editUser.lastName = user.profile.lastName;
+    this.editUser.email = user.profile.email;
+    this.editUser.phoneNumber = user.profile.phone;
+    this.editUser.admin = user.admin;
+    this.editUser.userId = user.id;
+
+    this.editOverlayVisible = true;
+  }
+  closeEditUserOverlay(): void {
+    this.editOverlayVisible = false;
+  }
+
+  // edits user
+  editUserApply() {
+    this.dataService.editUser(this.editUser.userId ?? 0, this.editUser.firstName, this.editUser.lastName,
+      this.editUser.email, this.editUser.phoneNumber, this.editUser.admin).subscribe(
+        (user) => {
+          console.log('NEW USER DATA ', user);
+          const index = this.userData.findIndex(u => u.id === user.id);
+          if (index !== -1) {
+            this.userData[index] = user;
+          }
+          this.closeEditUserOverlay();
+        },
+        (error) => {
+          console.log('DID NOT EDIT USER')
+        }
+      );
+  }
+
+  // deleteUser overlay visibility
+  openDeleteUserOverlay(user: FullUser) {
+    this.deleteUser.userToDelete = user.profile.firstName + ' ' + user.profile.lastName;
+    this.deleteUser.userId = user.id;
+
+    this.deleteOverlayVisible = true;
+  }
+
+  closeDeleteUserOverlay(): void {
+    this.deleteOverlayVisible = false;
+  }
+
+  // deletes user 
+  deleteUserApply(): void {
+    this.dataService.deleteUser(this.deleteUser.userId ?? 0).subscribe(
+      () => {
+        console.log('USER DELETED')
+        const index = this.userData.findIndex(u => u.id === this.deleteUser.userId);
+        if (index !== -1) {
+          this.userData.splice(index, 1);
+        }
+        this.closeDeleteUserOverlay();
+      },
+      (error) => {
+        console.log('DID NOT DELETE USER')
+      }
+    );
+  }
+
+  // dropdown text dissapears
+  selectedOption: boolean | null = null;
+  onSelectFocus() {
+    this.selectedOption = true;
+  }
+
   resetBools(): void {
     this.firstNameExist = true;
     this.lastNameExist = true;
@@ -143,9 +217,5 @@ export class UserRegistryComponent implements OnInit {
     this.newUser.admin = undefined;
   }
 
-  // some sort of delete user function
-  deleteUser(): void {
-
-  }
 
 }

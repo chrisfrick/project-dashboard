@@ -11,6 +11,7 @@ import { Project } from 'src/app/types/project';
 export class EditProjectComponent {
   @Input() project: Project | null = null;
   @Output() close: EventEmitter<void> = new EventEmitter<void>();
+  userIsAdmin: boolean = false;
 
   editProjectForm: FormGroup = new FormGroup({
     name: new FormControl<string>(''),
@@ -24,6 +25,9 @@ export class EditProjectComponent {
     if (!this.project) {
       this.close.emit();
     } else {
+      this.dataService.currentUser.subscribe(
+        (user) => (this.userIsAdmin = user!.admin)
+      );
       this.editProjectForm.controls['name'].setValue(this.project.name);
       this.editProjectForm.controls['description'].setValue(
         this.project.description
@@ -39,12 +43,12 @@ export class EditProjectComponent {
     this.close.emit();
   }
 
-  onSubmit(active: string): void {
+  onSubmit(): void {
     let updatedProject: Project = {
       ...this.project!,
       name: this.editProjectForm.controls['name'].value,
       description: this.editProjectForm.controls['description'].value,
-      active: active === 'True'
+      active: this.editProjectForm.controls['active'].value,
     };
     this.dataService.updateProject(updatedProject).subscribe((response) => {});
     this.close.emit();
