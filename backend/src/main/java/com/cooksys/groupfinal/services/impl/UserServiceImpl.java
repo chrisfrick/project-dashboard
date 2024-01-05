@@ -1,7 +1,9 @@
 package com.cooksys.groupfinal.services.impl;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.cooksys.groupfinal.dtos.ProfileDto;
@@ -13,12 +15,14 @@ import org.springframework.stereotype.Service;
 import com.cooksys.groupfinal.dtos.CredentialsDto;
 import com.cooksys.groupfinal.dtos.FullUserDto;
 import com.cooksys.groupfinal.embeddables.Credentials;
+import com.cooksys.groupfinal.entities.Company;
 import com.cooksys.groupfinal.entities.User;
 import com.cooksys.groupfinal.exceptions.BadRequestException;
 import com.cooksys.groupfinal.exceptions.NotAuthorizedException;
 import com.cooksys.groupfinal.exceptions.NotFoundException;
 import com.cooksys.groupfinal.mappers.CredentialsMapper;
 import com.cooksys.groupfinal.mappers.FullUserMapper;
+import com.cooksys.groupfinal.repositories.CompanyRepository;
 import com.cooksys.groupfinal.repositories.UserRepository;
 import com.cooksys.groupfinal.services.UserService;
 
@@ -29,6 +33,7 @@ import lombok.RequiredArgsConstructor;
 public class UserServiceImpl implements UserService {
 	
 	private final UserRepository userRepository;
+	private final CompanyRepository companyRepository;
     private final FullUserMapper fullUserMapper;
 	private final CredentialsMapper credentialsMapper;
     private final ProfileMapper profileMapper;
@@ -124,7 +129,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-        public FullUserDto createUser(CredentialsDto credentials, ProfileDto profile, boolean admin) {
+        public FullUserDto createUser(Long id, CredentialsDto credentials, ProfileDto profile, boolean admin) {
 
         if (credentials == null || profile == null) {
             throw new BadRequestException("Credentials and Profile are required.");
@@ -143,6 +148,9 @@ public class UserServiceImpl implements UserService {
             newUser.setCredentials(credentialsMapper.dtoToEntity(credentials));
             newUser.setProfile(profileMapper.dtoToEntity(profile));
             newUser.setAdmin(admin);
+            Set<Company> companies = new HashSet<Company>();
+            companies.add(companyRepository.getReferenceById(id));
+            newUser.setCompanies(companies);
             User savedUser = userRepository.saveAndFlush(newUser);
             return fullUserMapper.entityToFullUserDto(savedUser);
         }
