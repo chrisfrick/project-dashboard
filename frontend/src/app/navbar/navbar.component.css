@@ -129,6 +129,7 @@ ul {
   width: 100%;
   text-align: center;
   background-color: var(--color-light-navy);
+  z-index: 1000;
 }
 
 .menu.is-open .menu-item {
