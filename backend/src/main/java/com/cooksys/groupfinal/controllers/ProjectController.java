@@ -18,7 +18,7 @@ public class ProjectController {
 	//PATCH {projectId}
 	// request { ProjectDto }
 	// response ProjectDto
-	// to modify specific project description
+	// to modify project description only
 	//***************
 
 	@PatchMapping("{projectId}")
@@ -48,6 +48,11 @@ public class ProjectController {
 		return projectService.getProjectById(id);
 	}
 
+	//*********
+	//PATCH {projectId}
+	//request {projectDto}
+	//response{ProjectDto}
+	//to modify project details of specific project
 	@PatchMapping("{projectId}/admin")
 	public ProjectDto updateProject(@PathVariable ("projectId") Long projectId, @RequestBody ProjectDto projectDto) {
 		return projectService.updateProject(projectId, projectDto);
