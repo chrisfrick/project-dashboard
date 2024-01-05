@@ -13,6 +13,7 @@ import com.cooksys.groupfinal.dtos.AnnouncementDto;
 import com.cooksys.groupfinal.dtos.FullUserDto;
 import com.cooksys.groupfinal.dtos.ProjectDto;
 import com.cooksys.groupfinal.dtos.TeamDto;
+import com.cooksys.groupfinal.services.AnnouncementService;
 import com.cooksys.groupfinal.services.CompanyService;
 
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 public class CompanyController {
 	
 	private final CompanyService companyService;
+	private final AnnouncementService announcementService;
 	
 	@GetMapping("/{id}/users")
     public Set<FullUserDto> getAllUsers(@PathVariable Long id) {
@@ -32,6 +34,11 @@ public class CompanyController {
 	@GetMapping("/{id}/announcements")
     public Set<AnnouncementDto> getAllAnnouncements(@PathVariable Long id) {
         return companyService.getAllAnnouncements(id);
+    }
+	
+	@PostMapping("/{companyId}/announcements")
+    public AnnouncementDto createAnnouncement(@PathVariable("id") Long id, @RequestBody AnnouncementDto announcementDto) {
+        return announcementService.createAnnouncement(id, announcementDto);
     }
 	
 	@GetMapping("/{id}/teams")
