@@ -48,5 +48,8 @@ public class ProjectController {
 		return projectService.getProjectById(id);
 	}
 
-
+	@PatchMapping("{projectId}/admin")
+	public ProjectDto updateProject(@PathVariable ("projectId") Long projectId, @RequestBody ProjectDto projectDto) {
+		return projectService.updateProject(projectId, projectDto);
+	}
 }

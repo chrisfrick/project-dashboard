@@ -1,7 +1,6 @@
 package com.cooksys.groupfinal.services.impl;
 
 import com.cooksys.groupfinal.dtos.ProjectDto;
-import com.cooksys.groupfinal.dtos.TeamDto;
 import com.cooksys.groupfinal.entities.Project;
 import com.cooksys.groupfinal.entities.Team;
 import com.cooksys.groupfinal.entities.User;
@@ -12,17 +11,12 @@ import com.cooksys.groupfinal.mappers.ProjectMapper;
 import com.cooksys.groupfinal.repositories.ProjectRepository;
 import com.cooksys.groupfinal.repositories.TeamRepository;
 import com.cooksys.groupfinal.repositories.UserRepository;
-import org.springframework.stereotype.Service;
 import com.cooksys.groupfinal.services.ProjectService;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
-import java.awt.*;
-import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
-
-import com.cooksys.groupfinal.entities.Project;
 
 @Service
 @RequiredArgsConstructor
@@ -100,5 +94,21 @@ public class ProjectServiceImpl implements ProjectService {
         projectToDelete.setTeam(null);
         projectToDelete.setActive(false);
         return projectMapper.entityToDto(projectRepository.save(projectToDelete));
+    }
+
+    @Override
+    public ProjectDto updateProject(Long projectId, ProjectDto projectDto) {
+        // validation for null
+        if(projectDto == null || projectId == null) {
+            throw new BadRequestException("A team id, project id and projectDto are required.");
+        }
+        // fetch project by id
+        Project  project = findProject(projectDto.getId());
+
+        project.setName(projectDto.getName());
+        project.setDescription(projectDto.getDescription());
+        project.setActive(projectDto.isActive());
+        return projectMapper.entityToDto(projectRepository.save(project));
+
     }
 }

@@ -170,8 +170,8 @@ public class CompanyServiceImpl implements CompanyService {
 		teamRepository.save(team);
 
 		// persisting with company repository
-		company.getTeams().add(team);
-		companyRepository.save(company);
+		//company.getTeams().add(team);
+		//companyRepository.save(company);
 
 		return projectMapper.entityToDto(project);
 	}

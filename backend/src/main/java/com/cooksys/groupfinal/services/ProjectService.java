@@ -12,4 +12,6 @@ public interface ProjectService {
 
 
     ProjectDto deactivateProject(Long projectId, Long userId);
+
+    ProjectDto updateProject(Long projectId, ProjectDto projectDto);
 }
