@@ -37,6 +37,7 @@ public class UserController {
         return userService.getAllUsers();
     }
 
+    //Potentially move to CompanyController
     @PostMapping()
     public FullUserDto createUser(@RequestBody UserRequestDto userRequestDto) {
         return userService.createUser(userRequestDto.getCredentials(), userRequestDto.getProfile(), userRequestDto.isAdmin());
