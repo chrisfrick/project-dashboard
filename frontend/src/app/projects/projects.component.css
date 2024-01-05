@@ -12,6 +12,7 @@ h1 {
   top: 40px;
   margin: 0;
   color: var(--color-teal);
+  z-index: -1;
 }
 
 .back-button:hover {
