@@ -6,14 +6,12 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.cooksys.groupfinal.dtos.ProfileDto;
-import com.cooksys.groupfinal.dtos.UserRequestDto;
+import com.cooksys.groupfinal.dtos.*;
 import com.cooksys.groupfinal.embeddables.Profile;
+import com.cooksys.groupfinal.entities.Team;
 import com.cooksys.groupfinal.mappers.ProfileMapper;
 import org.springframework.stereotype.Service;
 
-import com.cooksys.groupfinal.dtos.CredentialsDto;
-import com.cooksys.groupfinal.dtos.FullUserDto;
 import com.cooksys.groupfinal.embeddables.Credentials;
 import com.cooksys.groupfinal.entities.Company;
 import com.cooksys.groupfinal.entities.User;
@@ -170,6 +168,13 @@ public class UserServiceImpl implements UserService {
 
         User userToDelete = userRepository.findById(userIdToDelete)
                 .orElseThrow(() -> new NotFoundException("User to delete not found."));
+
+        Set<Team> userTeams = userToDelete.getTeams();
+
+        for (Team team : userTeams) {
+            team.getTeammates().remove(userToDelete);
+
+        }
 
         userToDelete.setActive(false);
         userToDelete.setDeleted(true);
